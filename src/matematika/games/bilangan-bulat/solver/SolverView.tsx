@@ -13,6 +13,8 @@ import {
   Plus,
   Minus,
   ChevronDown,
+  ChevronLeft,
+  ChevronRight,
 } from 'lucide-react';
 import { OperationType } from '../game/GameManager';
 import { solveBilanganBulat, SolverResult } from './SolverEngine';
@@ -207,6 +209,18 @@ export const SolverView: React.FC<SolverViewProps> = ({
 
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
+  const scrollLeft = () => {
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollBy({ left: -180, behavior: 'smooth' });
+    }
+  };
+
+  const scrollRight = () => {
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollBy({ left: 180, behavior: 'smooth' });
+    }
+  };
+
   const [solution, setSolution] = useState<SolverResult | null>(() =>
     solveBilanganBulat(numbers, ops)
   );
@@ -247,15 +261,15 @@ export const SolverView: React.FC<SolverViewProps> = ({
   };
 
   return (
-    <div className="max-w-4xl mx-auto px-4 py-6 sm:py-8 space-y-6 animate-fade-in">
+    <div className="w-full max-w-4xl mx-auto px-2 sm:px-4 py-4 sm:py-8 space-y-4 sm:space-y-6 animate-fade-in min-w-0">
       {/* Top Header Navigation */}
       <div
-        className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 pb-6 border-b"
+        className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 sm:gap-4 pb-4 sm:pb-6 border-b min-w-0 w-full"
         style={{ borderColor: 'var(--glass-border)' }}
       >
         <button
           onClick={onExitModule || onBackToDashboard}
-          className="fisma-btn-secondary w-full sm:w-auto px-4 py-3 min-h-[48px] sm:min-h-[44px] rounded-xl text-xs sm:text-sm font-bold inline-flex items-center justify-center sm:justify-start gap-2 shadow-sm active:scale-95 transition-transform"
+          className="fisma-btn-secondary w-full sm:w-auto px-4 py-2.5 sm:py-3 min-h-[44px] rounded-xl text-xs sm:text-sm font-bold inline-flex items-center justify-center sm:justify-start gap-2 shadow-sm active:scale-95 transition-transform"
         >
           <ArrowLeft className="w-4 h-4 shrink-0" />
           <span>Kembali</span>
@@ -263,112 +277,138 @@ export const SolverView: React.FC<SolverViewProps> = ({
 
         {/* Tab Selector */}
         <div
-          className="p-1 rounded-2xl border flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-1 w-full sm:w-auto"
+          className="p-1 rounded-2xl border flex items-center justify-center gap-1 w-full sm:w-auto min-w-0"
           style={{ background: 'var(--card-bg)', borderColor: 'var(--card-border)' }}
         >
           <button
             onClick={onBackToDashboard}
-            className={`flex-1 sm:flex-initial px-4 py-2.5 min-h-[42px] rounded-xl text-xs sm:text-sm font-bold flex items-center justify-center gap-2 transition-all opacity-70 hover:opacity-100`}
+            className={`flex-1 sm:flex-initial px-3 sm:px-4 py-2 sm:py-2.5 min-h-[40px] sm:min-h-[42px] rounded-xl text-xs sm:text-sm font-bold flex items-center justify-center gap-1.5 transition-all opacity-70 hover:opacity-100 min-w-0`}
             style={{
               background: 'transparent',
               color: 'var(--text-primary)',
             }}
           >
             <Sparkles className="w-4 h-4 shrink-0" />
-            <span>Game Edukasi</span>
+            <span className="truncate">Game Edukasi</span>
           </button>
 
           <button
-            className={`flex-1 sm:flex-initial px-4 py-2.5 min-h-[42px] rounded-xl text-xs sm:text-sm font-bold flex items-center justify-center gap-2 transition-all shadow-md`}
+            className={`flex-1 sm:flex-initial px-3 sm:px-4 py-2 sm:py-2.5 min-h-[40px] sm:min-h-[42px] rounded-xl text-xs sm:text-sm font-bold flex items-center justify-center gap-1.5 transition-all shadow-md min-w-0`}
             style={{
               background: 'var(--button-primary-bg)',
               color: 'var(--button-primary-text)',
             }}
           >
             <Cpu className="w-4 h-4 shrink-0" />
-            <span>Bot Solver</span>
+            <span className="truncate">Bot Solver</span>
           </button>
         </div>
       </div>
 
       {/* Solver Main Input Panel */}
       <div
-        className="fisma-card p-4 sm:p-6 md:p-8 rounded-3xl border space-y-6 shadow-xl"
+        className="fisma-card p-3.5 sm:p-6 md:p-8 rounded-2xl sm:rounded-3xl border space-y-4 sm:space-y-6 shadow-xl w-full max-w-full min-w-0 overflow-hidden"
         style={{ background: 'var(--card-bg)', borderColor: 'var(--card-border)' }}
       >
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b pb-4" style={{ borderColor: 'var(--glass-border)' }}>
-          <div className="flex items-center gap-3">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 border-b pb-4 min-w-0 w-full" style={{ borderColor: 'var(--glass-border)' }}>
+          <div className="flex items-start sm:items-center gap-2.5 sm:gap-3 min-w-0 w-full sm:w-auto">
             <div
-              className="w-10 h-10 shrink-0 rounded-2xl flex items-center justify-center shadow-md"
+              className="w-9 h-9 sm:w-10 sm:h-10 shrink-0 rounded-2xl flex items-center justify-center shadow-md mt-0.5 sm:mt-0"
               style={{ background: 'var(--button-primary-bg)', color: 'var(--button-primary-text)' }}
             >
-              <Calculator className="w-5 h-5" />
+              <Calculator className="w-4 h-4 sm:w-5 sm:h-5" />
             </div>
-            <div>
-              <h2 className="text-xl font-extrabold" style={{ color: 'var(--text-primary)' }}>
+            <div className="flex-1 min-w-0 break-words whitespace-normal">
+              <h2 className="text-lg sm:text-xl font-extrabold" style={{ color: 'var(--text-primary)' }}>
                 Input Persamaan Operasi
               </h2>
-              <p className="text-xs" style={{ color: 'var(--text-muted)' }}>
+              <p className="text-[11px] sm:text-xs leading-relaxed" style={{ color: 'var(--text-muted)' }}>
                 Masukkan bilangan bulat dan operasinya. Kamu bisa menambah jumlah bilangan tanpa batas.
               </p>
             </div>
           </div>
           
-          <div className="flex flex-wrap items-center gap-2 w-full sm:w-auto">
-             <button
-                type="button"
-                onClick={handleAddTerm}
-                className="flex-1 sm:flex-initial p-2 rounded-xl border text-xs font-bold flex items-center justify-center gap-1 transition-all min-h-[40px] shadow-sm hover:scale-105"
-                style={{
-                  background: 'var(--button-primary-bg)',
-                  borderColor: 'var(--card-border)',
-                  color: 'var(--button-primary-text)',
-                }}
-                title="Tambah Bilangan"
-              >
-                <Plus className="w-4 h-4 shrink-0" />
-                <span className="hidden sm:inline">Tambah</span>
-              </button>
-              <button
-                type="button"
-                onClick={handleRemoveTerm}
-                disabled={numbers.length <= 2}
-                className="flex-1 sm:flex-initial p-2 rounded-xl border text-xs font-bold flex items-center justify-center gap-1 transition-all disabled:opacity-40 min-h-[40px] opacity-80 hover:opacity-100"
-                style={{
-                  background: 'var(--glass-bg)',
-                  borderColor: 'var(--card-border)',
-                  color: 'var(--text-primary)',
-                }}
-                title="Hapus Bilangan Terakhir"
-              >
-                <Minus className="w-4 h-4 shrink-0" />
-                <span className="hidden sm:inline">Hapus</span>
-              </button>
+          <div className="grid grid-cols-2 sm:flex sm:flex-wrap items-center gap-2 w-full sm:w-auto shrink-0">
+            <button
+              type="button"
+              onClick={handleAddTerm}
+              className="p-2 sm:p-2 rounded-xl border text-xs font-bold flex items-center justify-center gap-1.5 transition-all min-h-[40px] shadow-sm hover:scale-105 active:scale-95"
+              style={{
+                background: 'var(--button-primary-bg)',
+                borderColor: 'var(--card-border)',
+                color: 'var(--button-primary-text)',
+              }}
+              title="Tambah Bilangan"
+            >
+              <Plus className="w-4 h-4 shrink-0" />
+              <span>Tambah</span>
+            </button>
+            <button
+              type="button"
+              onClick={handleRemoveTerm}
+              disabled={numbers.length <= 2}
+              className="p-2 sm:p-2 rounded-xl border text-xs font-bold flex items-center justify-center gap-1.5 transition-all disabled:opacity-40 min-h-[40px] opacity-80 hover:opacity-100 active:scale-95"
+              style={{
+                background: 'var(--glass-bg)',
+                borderColor: 'var(--card-border)',
+                color: 'var(--text-primary)',
+              }}
+              title="Hapus Bilangan Terakhir"
+            >
+              <Minus className="w-4 h-4 shrink-0" />
+              <span>Hapus</span>
+            </button>
           </div>
         </div>
 
         {/* Dynamic Form Inputs Container - Horizontal Layout & Scrollable */}
-        <div className="relative">
+        <div className="relative w-full max-w-full min-w-0 space-y-2">
+          {/* Scroll Navigation Controls for Touch Screen */}
+          <div className="flex items-center justify-between px-1 text-xs font-bold" style={{ color: 'var(--text-muted)' }}>
+            <div className="flex items-center gap-1.5 shrink-0">
+              <button
+                type="button"
+                onClick={scrollLeft}
+                className="px-2.5 py-1.5 rounded-xl border flex items-center gap-1 text-xs font-bold transition-all shadow-sm active:scale-95 hover:brightness-110 cursor-pointer"
+                style={{ background: 'var(--glass-bg)', borderColor: 'var(--card-border)', color: 'var(--text-primary)' }}
+                title="Geser Kiri"
+              >
+                <ChevronLeft className="w-4 h-4 text-amber-400 shrink-0" />
+                <span className="text-[11px] sm:text-xs">Kiri</span>
+              </button>
+              <button
+                type="button"
+                onClick={scrollRight}
+                className="px-2.5 py-1.5 rounded-xl border flex items-center gap-1 text-xs font-bold transition-all shadow-sm active:scale-95 hover:brightness-110 cursor-pointer"
+                style={{ background: 'var(--glass-bg)', borderColor: 'var(--card-border)', color: 'var(--text-primary)' }}
+                title="Geser Kanan"
+              >
+                <span className="text-[11px] sm:text-xs">Kanan</span>
+                <ChevronRight className="w-4 h-4 text-amber-400 shrink-0" />
+              </button>
+            </div>
+          </div>
+
           <div
             ref={scrollContainerRef}
-            className="flex items-end gap-3 sm:gap-4 overflow-x-auto overflow-y-hidden pb-2 pt-2 px-1 rounded-2xl transition-all scroll-smooth custom-scrollbar"
+            className="flex items-end gap-3 sm:gap-4 overflow-x-auto overflow-y-hidden pb-4 pt-2 px-1 rounded-2xl transition-all scroll-smooth custom-scrollbar w-full max-w-full min-w-0"
             style={{
-              scrollbarWidth: 'thin',
-              scrollbarColor: 'var(--primary-accent) transparent',
+              scrollbarWidth: 'auto',
+              scrollbarColor: 'var(--primary-accent) var(--card-border)',
             }}
           >
             {numbers.map((num, idx) => (
               <React.Fragment key={idx}>
                 {/* Number Input Box */}
                 <div className="space-y-1 shrink-0 w-28 sm:w-36">
-                  <label className="text-xs font-bold block" style={{ color: 'var(--text-secondary)' }}>
+                  <label className="text-[11px] sm:text-xs font-bold block truncate" style={{ color: 'var(--text-secondary)' }}>
                     Bilangan {idx + 1}:
                   </label>
                   <input
                     type="number"
                     value={num}
                     onChange={(e) => updateNumber(idx, parseInt(e.target.value, 10) || 0)}
-                    className="w-full p-3 rounded-2xl border font-mono font-black text-center text-xl focus:outline-none focus:ring-2 focus:ring-amber-400 min-h-[52px] shadow-inner"
+                    className="w-full p-2.5 sm:p-3 rounded-2xl border font-mono font-black text-center text-lg sm:text-xl focus:outline-none focus:ring-2 focus:ring-amber-400 min-h-[48px] sm:min-h-[52px] shadow-inner"
                     style={{
                       background: 'var(--glass-bg)',
                       borderColor: 'var(--card-border)',
@@ -391,42 +431,38 @@ export const SolverView: React.FC<SolverViewProps> = ({
             ))}
           </div>
 
-          {/* Horizontal Scroll Indicator / Counter */}
-          {numbers.length > 3 && (
-            <div className="flex items-center justify-between text-[11px] font-bold px-2 pt-1" style={{ color: 'var(--text-muted)' }}>
-              <span>👈 Geser ke samping untuk melihat semua bilangan 👉</span>
-              <span>Total: {numbers.length} Bilangan</span>
-            </div>
-          )}
+          <div className="flex items-center justify-between text-[11px] font-bold px-1" style={{ color: 'var(--text-muted)' }}>
+            <span>Total: {numbers.length} Bilangan</span>
+          </div>
         </div>
 
         {/* Calculate Action */}
         <button
           type="button"
           onClick={handleCalculate}
-          className="fisma-btn-primary w-full py-3.5 sm:py-4 px-4 sm:px-6 rounded-2xl text-xs sm:text-base font-extrabold flex flex-wrap items-center justify-center gap-2 shadow-lg active:scale-98 transition-all min-h-[48px] text-center whitespace-normal"
+          className="fisma-btn-primary w-full py-3 sm:py-4 px-3 sm:px-6 rounded-2xl text-xs sm:text-base font-extrabold flex items-center justify-center gap-2 shadow-lg active:scale-98 transition-all min-h-[46px] sm:min-h-[48px] text-center whitespace-normal"
         >
-          <Sparkles className="w-5 h-5 shrink-0" />
+          <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 shrink-0" />
           <span>Selesaikan & Jelaskan Langkahnya</span>
         </button>
       </div>
 
       {/* Solver Result Display */}
       {solution && (
-        <div className="space-y-6">
+        <div className="space-y-4 sm:space-y-6 w-full max-w-full min-w-0">
           {/* Main Answer Card */}
           <div
-            className="fisma-card p-4 sm:p-6 rounded-3xl border text-center space-y-2 relative overflow-hidden shadow-lg"
+            className="fisma-card p-4 sm:p-6 rounded-2xl sm:rounded-3xl border text-center space-y-2 relative overflow-hidden shadow-lg w-full max-w-full min-w-0"
             style={{
               background: 'var(--card-bg)',
               borderColor: 'var(--primary-accent)',
             }}
           >
-            <span className="text-xs font-extrabold uppercase tracking-widest block" style={{ color: 'var(--text-muted)' }}>
+            <span className="text-[10px] sm:text-xs font-extrabold uppercase tracking-widest block" style={{ color: 'var(--text-muted)' }}>
               Persamaan & Hasil Akhir:
             </span>
             <div
-              className="py-2 px-1 text-2xl sm:text-4xl lg:text-5xl font-black font-mono overflow-x-auto whitespace-nowrap custom-scrollbar w-full text-center"
+              className="py-2 px-1 text-xl sm:text-4xl lg:text-5xl font-black font-mono overflow-x-auto whitespace-nowrap custom-scrollbar w-full max-w-full min-w-0 text-center"
               style={{
                 color: 'var(--text-primary)',
               }}
@@ -443,42 +479,44 @@ export const SolverView: React.FC<SolverViewProps> = ({
           {/* Number Line Visualizer Card (Only if exactly 1 add/sub operation) */}
           {solution.numberLine && (
             <div
-              className="fisma-card p-4 sm:p-6 rounded-3xl border space-y-3"
+              className="fisma-card p-3.5 sm:p-6 rounded-2xl sm:rounded-3xl border space-y-3 w-full max-w-full min-w-0 overflow-hidden"
               style={{ background: 'var(--card-bg)', borderColor: 'var(--card-border)' }}
             >
-              <div className="flex flex-wrap items-center gap-2 w-full sm:w-auto">
+              <div className="flex flex-wrap items-center gap-2 w-full sm:w-auto min-w-0">
                 <Lightbulb className="w-4 h-4 text-amber-400 shrink-0" />
-                <h3 className="text-sm font-extrabold" style={{ color: 'var(--text-primary)' }}>
+                <h3 className="text-xs sm:text-sm font-extrabold" style={{ color: 'var(--text-primary)' }}>
                   Visualisasi Garis Bilangan (Number Line)
                 </h3>
               </div>
-              <NumberLineVisualizer state={solution.numberLine} />
+              <div className="w-full max-w-full min-w-0 overflow-hidden">
+                <NumberLineVisualizer state={solution.numberLine} />
+              </div>
             </div>
           )}
 
           {/* Step By Step Explanation */}
           <div
-            className="fisma-card p-4 sm:p-6 md:p-8 rounded-3xl border space-y-5"
+            className="fisma-card p-3.5 sm:p-6 md:p-8 rounded-2xl sm:rounded-3xl border space-y-4 sm:space-y-5 w-full max-w-full min-w-0 overflow-hidden"
             style={{ background: 'var(--card-bg)', borderColor: 'var(--card-border)' }}
           >
-            <div className="flex flex-wrap items-center gap-2 w-full sm:w-auto">
-              <BookOpen className="w-5 h-5" style={{ color: 'var(--primary-accent)' }} />
-              <h3 className="text-lg font-extrabold" style={{ color: 'var(--text-primary)' }}>
+            <div className="flex flex-wrap items-center gap-2 w-full sm:w-auto min-w-0">
+              <BookOpen className="w-4 h-4 sm:w-5 sm:h-5 shrink-0" style={{ color: 'var(--primary-accent)' }} />
+              <h3 className="text-base sm:text-lg font-extrabold" style={{ color: 'var(--text-primary)' }}>
                 Langkah Demi Langkah Penyelesaian:
               </h3>
             </div>
 
-            <div className="space-y-4">
+            <div className="space-y-3 sm:space-y-4 w-full max-w-full min-w-0">
               {solution.steps.map((step) => (
                 <div
                   key={step.stepNumber}
-                  className="p-4 sm:p-5 rounded-2xl border space-y-2 relative transition-all"
+                  className="p-3.5 sm:p-5 rounded-2xl border space-y-2 relative transition-all w-full max-w-full min-w-0 overflow-hidden"
                   style={{
                     background: 'var(--glass-bg)',
                     borderColor: 'var(--glass-border)',
                   }}
                 >
-                  <div className="flex flex-wrap items-center justify-between gap-2">
+                  <div className="flex flex-wrap items-center justify-between gap-2 min-w-0">
                     <span
                       className="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase tracking-wider"
                       style={{ background: 'var(--badge-bg)', color: 'var(--badge-text)' }}
@@ -487,21 +525,21 @@ export const SolverView: React.FC<SolverViewProps> = ({
                     </span>
 
                     {step.highlightRule && (
-                      <span className="text-xs font-mono font-extrabold px-2.5 py-0.5 rounded bg-amber-400/20 text-amber-400 border border-amber-400/30">
+                      <span className="text-[11px] sm:text-xs font-mono font-extrabold px-2.5 py-0.5 rounded bg-amber-400/20 text-amber-400 border border-amber-400/30">
                         Rumus: {step.highlightRule}
                       </span>
                     )}
                   </div>
 
-                  <h4 className="text-base font-black" style={{ color: 'var(--text-primary)' }}>
+                  <h4 className="text-sm sm:text-base font-black" style={{ color: 'var(--text-primary)' }}>
                     {step.title}
                   </h4>
 
-                  <div className="p-3 rounded-xl bg-black/10 dark:bg-black/30 font-mono text-base font-bold overflow-x-auto whitespace-nowrap custom-scrollbar" style={{ color: 'var(--primary-accent)' }}>
+                  <div className="p-2.5 sm:p-3 rounded-xl bg-black/10 dark:bg-black/30 font-mono text-sm sm:text-base font-bold overflow-x-auto whitespace-nowrap custom-scrollbar w-full max-w-full min-w-0" style={{ color: 'var(--primary-accent)' }}>
                     {step.expression}
                   </div>
 
-                  <p className="text-xs sm:text-sm" style={{ color: 'var(--text-secondary)' }}>
+                  <p className="text-xs sm:text-sm leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
                     {step.explanation}
                   </p>
                 </div>
@@ -511,10 +549,10 @@ export const SolverView: React.FC<SolverViewProps> = ({
 
           {/* Integer Rules Cheatsheet */}
           <div
-            className="p-4 sm:p-6 rounded-3xl border space-y-3"
+            className="p-3.5 sm:p-6 rounded-2xl sm:rounded-3xl border space-y-3 w-full max-w-full min-w-0 overflow-hidden"
             style={{ background: 'var(--badge-bg)', borderColor: 'var(--card-border)' }}
           >
-            <h4 className="text-sm font-extrabold flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
+            <h4 className="text-xs sm:text-sm font-extrabold flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
               <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
               <span>Panduan Ringkas Tanda Operasi Bilangan Bulat</span>
             </h4>

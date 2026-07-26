@@ -94,10 +94,12 @@ body {
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
+  height: 10px;
 }
 
 ::-webkit-scrollbar-track {
-  background: rgba(0, 0, 0, 0.1);
+  background: rgba(0, 0, 0, 0.15);
+  border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb {
@@ -107,6 +109,22 @@ body {
 
 ::-webkit-scrollbar-thumb:hover {
   background: var(--primary-accent);
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  height: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: var(--glass-bg, rgba(255, 255, 255, 0.05));
+  border-radius: 9999px;
+  border: 1px solid var(--card-border, rgba(255, 255, 255, 0.1));
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: var(--primary-accent, #3b82f6);
+  border-radius: 9999px;
+  box-shadow: 0 0 10px var(--primary-accent, rgba(59, 130, 246, 0.5));
 }
 
 @keyframes fade-in {

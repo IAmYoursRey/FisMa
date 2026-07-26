@@ -265,13 +265,23 @@ export const PuzzleBuilder: React.FC<PuzzleBuilderProps> = ({
     }
   };
 
+  const getCellSizeClass = (cols: number) => {
+    if (cols >= 7) {
+      return 'w-8 h-8 sm:w-11 sm:h-11 md:w-14 md:h-14 text-xs sm:text-base md:text-xl rounded-lg sm:rounded-xl md:rounded-2xl';
+    }
+    if (cols >= 5) {
+      return 'w-9 h-9 sm:w-12 sm:h-12 md:w-14 md:h-14 text-sm sm:text-lg md:text-xl rounded-xl md:rounded-2xl';
+    }
+    return 'w-10 h-10 sm:w-13 sm:h-13 md:w-14 md:h-14 text-base sm:text-xl rounded-xl md:rounded-2xl';
+  };
+
   const opSymbol = config.operation === '*' ? '×' : config.operation;
 
   return (
-    <div className="space-y-8 animate-fade-in">
+    <div className="space-y-6 sm:space-y-8 animate-fade-in w-full max-w-full min-w-0 overflow-hidden">
       {/* MAIN VISUAL EDITOR CARD */}
       <div
-        className="fisma-card rounded-3xl p-5 sm:p-8 border shadow-2xl relative overflow-hidden"
+        className="fisma-card rounded-2xl sm:rounded-3xl p-3.5 sm:p-8 border shadow-2xl relative overflow-hidden w-full max-w-full min-w-0"
         style={{
           background: 'var(--card-bg)',
           borderColor: 'var(--card-border)',
@@ -286,27 +296,27 @@ export const PuzzleBuilder: React.FC<PuzzleBuilderProps> = ({
 
         {/* Card Header */}
         <div
-          className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-5 border-b"
+          className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4 pb-4 sm:pb-5 border-b min-w-0 w-full"
           style={{ borderColor: 'var(--glass-border)' }}
         >
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2.5 sm:gap-3 min-w-0">
             <div
-              className="w-11 h-11 rounded-2xl flex items-center justify-center shadow-lg shrink-0"
+              className="w-9 h-9 sm:w-11 sm:h-11 rounded-xl sm:rounded-2xl flex items-center justify-center shadow-lg shrink-0"
               style={{
                 background: 'var(--button-primary-bg)',
                 color: 'var(--button-primary-text)',
               }}
             >
-              <SlidersHorizontal className="w-5 h-5" />
+              <SlidersHorizontal className="w-4 h-4 sm:w-5 sm:h-5" />
             </div>
-            <div>
+            <div className="min-w-0">
               <h2
-                className="text-xl sm:text-2xl font-black tracking-tight"
+                className="text-lg sm:text-2xl font-black tracking-tight"
                 style={{ color: 'var(--text-primary)' }}
               >
                 Editor Puzzle
               </h2>
-              <p className="text-xs sm:text-sm" style={{ color: 'var(--text-secondary)' }}>
+              <p className="text-[11px] sm:text-sm leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
                 Klik kotak untuk mengaktifkan (<span className="text-emerald-400 font-bold">nyala</span>/
                 <span className="opacity-50">mati</span>) digit angka puzzle.
               </p>
@@ -314,14 +324,14 @@ export const PuzzleBuilder: React.FC<PuzzleBuilderProps> = ({
           </div>
 
           {/* Quick Presets */}
-          <div className="flex items-center gap-1.5 flex-wrap">
-            <span className="text-[11px] font-bold uppercase mr-1" style={{ color: 'var(--text-muted)' }}>
+          <div className="flex items-center gap-1.5 flex-wrap w-full sm:w-auto">
+            <span className="text-[10px] sm:text-[11px] font-bold uppercase mr-1" style={{ color: 'var(--text-muted)' }}>
               Preset:
             </span>
             <button
               type="button"
               onClick={() => handleLoadPreset('standard')}
-              className="px-2.5 py-1.5 rounded-xl text-xs font-bold border hover:scale-105 transition-all opacity-80 hover:opacity-100"
+              className="px-2 sm:px-2.5 py-1 sm:py-1.5 rounded-xl text-[11px] sm:text-xs font-bold border hover:scale-105 transition-all opacity-80 hover:opacity-100"
               style={{ background: 'var(--glass-bg)', borderColor: 'var(--card-border)', color: 'var(--text-primary)' }}
             >
               3x3 Standard
@@ -329,7 +339,7 @@ export const PuzzleBuilder: React.FC<PuzzleBuilderProps> = ({
             <button
               type="button"
               onClick={() => handleLoadPreset('single')}
-              className="px-2.5 py-1.5 rounded-xl text-xs font-bold border hover:scale-105 transition-all opacity-80 hover:opacity-100"
+              className="px-2 sm:px-2.5 py-1 sm:py-1.5 rounded-xl text-[11px] sm:text-xs font-bold border hover:scale-105 transition-all opacity-80 hover:opacity-100"
               style={{ background: 'var(--glass-bg)', borderColor: 'var(--card-border)', color: 'var(--text-primary)' }}
             >
               1-2-3 Digit
@@ -337,7 +347,7 @@ export const PuzzleBuilder: React.FC<PuzzleBuilderProps> = ({
             <button
               type="button"
               onClick={() => handleLoadPreset('stair')}
-              className="px-2.5 py-1.5 rounded-xl text-xs font-bold border hover:scale-105 transition-all opacity-80 hover:opacity-100"
+              className="px-2 sm:px-2.5 py-1 sm:py-1.5 rounded-xl text-[11px] sm:text-xs font-bold border hover:scale-105 transition-all opacity-80 hover:opacity-100"
               style={{ background: 'var(--glass-bg)', borderColor: 'var(--card-border)', color: 'var(--text-primary)' }}
             >
               Tangga
@@ -346,18 +356,18 @@ export const PuzzleBuilder: React.FC<PuzzleBuilderProps> = ({
         </div>
 
         {/* EDITOR GRID TOOLBAR */}
-        <div className="pt-4 flex items-center justify-between gap-2 flex-wrap">
-          <div className="flex items-center gap-2">
+        <div className="pt-3 sm:pt-4 flex items-center justify-between gap-2 flex-wrap min-w-0 w-full">
+          <div className="flex items-center gap-1.5 min-w-0">
             <span
-              className="text-xs font-bold uppercase tracking-wider flex items-center gap-1.5"
+              className="text-[11px] sm:text-xs font-bold uppercase tracking-wider flex items-center gap-1.5"
               style={{ color: 'var(--text-muted)' }}
             >
-              <Sparkles className="w-4 h-4 text-amber-400" />
-              <span>Grid Matrix ({gridCols} Kolom x {rowCount} Baris)</span>
+              <Sparkles className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-amber-400 shrink-0" />
+              <span className="truncate">Grid Matrix ({gridCols} Kolom x {rowCount} Baris)</span>
             </span>
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 shrink-0">
             {/* Operator Switcher */}
             <div
               className="flex items-center gap-1 p-1 rounded-xl border"
@@ -396,7 +406,7 @@ export const PuzzleBuilder: React.FC<PuzzleBuilderProps> = ({
 
         {/* STATIC DISPLAY CONTAINER FOR PUZZLE MATRIX */}
         <div
-          className="relative w-full py-8 my-4 rounded-3xl border overflow-x-auto select-none transition-colors flex items-center justify-center min-h-[380px]"
+          className="relative w-full py-4 sm:py-8 my-3 sm:my-4 rounded-2xl sm:rounded-3xl border overflow-x-auto select-none transition-colors flex min-h-[300px] sm:min-h-[380px] custom-scrollbar max-w-full min-w-0"
           style={{
             background: 'var(--glass-bg)',
             borderColor: 'var(--glass-border)',
@@ -413,8 +423,8 @@ export const PuzzleBuilder: React.FC<PuzzleBuilderProps> = ({
             }}
           />
 
-          {/* PUZZLE CONTENT BLOCK (CENTERED HORIZONTALLY) */}
-          <div className="relative z-10 flex flex-col items-center justify-center gap-4 my-auto shrink-0 px-4">
+          {/* PUZZLE CONTENT BLOCK (CENTERED HORIZONTALLY / SCROLLABLE IF OVERFLOW) */}
+          <div className="relative z-10 flex flex-col items-center justify-center gap-3 sm:gap-4 m-auto shrink-0 p-2 sm:p-6 min-w-max">
               {/* OPERAND ROWS MATRIX */}
               <AnimatePresence>
                 {operandActiveCounts.map((activeCount, rIdx) => {
@@ -427,27 +437,27 @@ export const PuzzleBuilder: React.FC<PuzzleBuilderProps> = ({
                       animate={{ opacity: 1, y: 0, scale: 1 }}
                       exit={{ opacity: 0, y: -20, scale: 0.9 }}
                       transition={{ duration: 0.2 }}
-                      className="flex items-center justify-center gap-3 shrink-0"
+                      className="flex items-center justify-center gap-2 sm:gap-3 shrink-0"
                     >
                       {/* Operator Symbol on Left of Last Operand */}
                       {isLastOperand ? (
                         <span
-                          className="text-2xl font-black font-mono shrink-0 w-8 text-right"
+                          className="text-lg sm:text-2xl font-black font-mono shrink-0 w-6 sm:w-8 text-right"
                           style={{ color: 'var(--primary-accent)' }}
                         >
                           {opSymbol}
                         </span>
                       ) : (
-                        <div className="w-8 shrink-0" />
+                        <div className="w-6 sm:w-8 shrink-0" />
                       )}
 
                       {/* Row Label Indicator */}
-                      <span className="text-xs font-mono font-bold opacity-40 shrink-0 w-6">
+                      <span className="text-[10px] sm:text-xs font-mono font-bold opacity-40 shrink-0 w-5 sm:w-6">
                         #{rIdx + 1}
                       </span>
 
                       {/* Visual Cell Grid (Synchronized gridCols wide) */}
-                      <div className="flex items-center gap-2.5 shrink-0">
+                      <div className="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
                         <AnimatePresence>
                           {Array.from({ length: gridCols }).map((_, cIdx) => {
                             const isActive = cIdx < activeCount;
@@ -461,9 +471,9 @@ export const PuzzleBuilder: React.FC<PuzzleBuilderProps> = ({
                                 exit={{ opacity: 0, scale: 0.8 }}
                                 transition={{ duration: 0.18 }}
                                 onClick={() => handleOperandCellClick(rIdx, cIdx)}
-                                className={`w-[56px] h-[56px] rounded-2xl border flex flex-col items-center justify-center font-mono font-extrabold text-xl transition-all duration-200 cursor-pointer shrink-0 ${
+                                className={`${getCellSizeClass(gridCols)} border flex flex-col items-center justify-center font-mono font-extrabold transition-all duration-200 cursor-pointer shrink-0 ${
                                   isActive
-                                    ? 'ring-2 ring-offset-2 scale-105 shadow-xl'
+                                    ? 'ring-2 ring-offset-1 sm:ring-offset-2 scale-105 shadow-xl'
                                     : 'opacity-40 hover:opacity-80 hover:scale-105'
                                 }`}
                                 style={{
@@ -474,7 +484,7 @@ export const PuzzleBuilder: React.FC<PuzzleBuilderProps> = ({
                                     ? 'var(--primary-accent)'
                                     : 'var(--card-border)',
                                   boxShadow: isActive
-                                    ? '0 0 20px var(--primary-accent)'
+                                    ? '0 0 16px var(--primary-accent)'
                                     : 'var(--shadow-sm)',
                                   color: isActive
                                     ? 'var(--primary-accent)'
@@ -483,7 +493,7 @@ export const PuzzleBuilder: React.FC<PuzzleBuilderProps> = ({
                                 title={isActive ? 'Kotak Nyala (Terpilih)' : 'Kotak Mati (Klik untuk Nyala)'}
                               >
                                 <span>{isActive ? 'a' : 'b'}</span>
-                                <span className="text-[9px] font-sans opacity-60 font-semibold uppercase -mt-1">
+                                <span className="text-[8px] sm:text-[9px] font-sans opacity-60 font-semibold uppercase -mt-0.5 sm:-mt-1">
                                   {isActive ? 'Nyala' : 'Mati'}
                                 </span>
                               </motion.button>
@@ -503,13 +513,13 @@ export const PuzzleBuilder: React.FC<PuzzleBuilderProps> = ({
               />
 
               {/* RESULT ROW DISPLAY */}
-              <div className="flex items-center justify-center gap-3 shrink-0">
-                <div className="w-8 shrink-0" />
-                <span className="text-xs font-mono font-bold opacity-40 shrink-0 w-6">
+              <div className="flex items-center justify-center gap-2 sm:gap-3 shrink-0">
+                <div className="w-6 sm:w-8 shrink-0" />
+                <span className="text-[10px] sm:text-xs font-mono font-bold opacity-40 shrink-0 w-5 sm:w-6">
                   Hasil
                 </span>
 
-                <div className="flex items-center gap-2.5 shrink-0">
+                <div className="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
                   <AnimatePresence>
                     {Array.from({ length: gridCols }).map((_, cIdx) => {
                       const isActive = cIdx < resultActiveCount;
@@ -523,9 +533,9 @@ export const PuzzleBuilder: React.FC<PuzzleBuilderProps> = ({
                           exit={{ opacity: 0, scale: 0.8 }}
                           transition={{ duration: 0.18 }}
                           onClick={() => handleResultCellClick(cIdx)}
-                          className={`w-[56px] h-[56px] rounded-2xl border flex flex-col items-center justify-center font-mono font-black text-xl transition-all duration-200 cursor-pointer shrink-0 ${
+                          className={`${getCellSizeClass(gridCols)} border flex flex-col items-center justify-center font-mono font-black transition-all duration-200 cursor-pointer shrink-0 ${
                             isActive
-                              ? 'ring-2 ring-offset-2 scale-105 shadow-xl'
+                              ? 'ring-2 ring-offset-1 sm:ring-offset-2 scale-105 shadow-xl'
                               : 'opacity-40 hover:opacity-80 hover:scale-105'
                           }`}
                           style={{
@@ -536,7 +546,7 @@ export const PuzzleBuilder: React.FC<PuzzleBuilderProps> = ({
                               ? 'var(--primary-accent)'
                               : 'var(--card-border)',
                             boxShadow: isActive
-                              ? '0 0 20px var(--primary-accent)'
+                              ? '0 0 16px var(--primary-accent)'
                               : 'var(--shadow-sm)',
                             color: isActive
                               ? 'var(--primary-accent)'
@@ -545,7 +555,7 @@ export const PuzzleBuilder: React.FC<PuzzleBuilderProps> = ({
                           title={isActive ? 'Hasil Nyala' : 'Hasil Mati'}
                         >
                           <span>{isActive ? 'a' : 'b'}</span>
-                          <span className="text-[9px] font-sans opacity-60 font-semibold uppercase -mt-1">
+                          <span className="text-[8px] sm:text-[9px] font-sans opacity-60 font-semibold uppercase -mt-0.5 sm:-mt-1">
                             {isActive ? 'Nyala' : 'Mati'}
                           </span>
                         </motion.button>

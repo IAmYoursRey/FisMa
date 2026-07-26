@@ -125,7 +125,7 @@ export const BilanganBulatDashboard: React.FC<BilanganBulatDashboardProps> = ({
   };
 
   return (
-    <div className="max-w-4xl mx-auto px-4 py-6 sm:py-8 space-y-8 animate-fade-in">
+    <div className="w-full max-w-4xl mx-auto px-2 sm:px-4 py-4 sm:py-8 space-y-6 sm:space-y-8 animate-fade-in min-w-0">
       {/* Top Header Navigation */}
       <div
         className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 pb-6 border-b"

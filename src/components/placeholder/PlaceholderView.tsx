@@ -87,7 +87,7 @@ export const PlaceholderView: React.FC<PlaceholderViewProps> = ({
   const IconComponent = details.icon;
 
   return (
-    <div className="max-w-5xl mx-auto px-4 sm:px-6 py-6 sm:py-10 animate-fade-in">
+    <div className="w-full max-w-5xl mx-auto px-2 sm:px-6 py-4 sm:py-10 animate-fade-in min-w-0">
       <button
         onClick={onBackToDashboard}
         className="px-4 py-3 min-h-[48px] rounded-xl text-sm mb-8 inline-flex items-center gap-2 font-bold transition-all text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-secondary)] active:scale-95"

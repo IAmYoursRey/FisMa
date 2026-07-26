@@ -486,7 +486,7 @@ export const CryptarithmGame: React.FC<CryptarithmGameProps> = ({ onBackToDashbo
   const maxDigitLen = getMaxDigitLen();
 
   return (
-    <div className="max-w-6xl mx-auto px-4 sm:px-6 py-6 sm:py-10 animate-fade-in space-y-8">
+    <div className="w-full max-w-6xl mx-auto px-2 sm:px-6 py-4 sm:py-10 animate-fade-in space-y-6 sm:space-y-8 min-w-0 overflow-hidden">
       {/* Top Header Navigation */}
       <div
         className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 pb-6 border-b"
@@ -1078,7 +1078,7 @@ export const CryptarithmGame: React.FC<CryptarithmGameProps> = ({ onBackToDashbo
 
           {/* VISUAL MATRIX LETTER BOXES CONTAINER (KOTAK KOSONG UNTUK ISIAN HURUF) */}
           <div
-            className="relative w-full py-8 my-4 rounded-3xl border overflow-x-auto select-none transition-colors custom-scrollbar"
+            className="relative w-full py-4 sm:py-8 my-3 sm:my-4 rounded-2xl sm:rounded-3xl border overflow-x-auto select-none transition-colors custom-scrollbar flex min-h-[240px] sm:min-h-[280px] max-w-full min-w-0"
             style={{
               background: 'var(--glass-bg)',
               borderColor: 'var(--glass-border)',
@@ -1096,26 +1096,26 @@ export const CryptarithmGame: React.FC<CryptarithmGameProps> = ({ onBackToDashbo
             />
 
             {/* LETTER GRID MATRIX */}
-            <div className="relative z-10 flex min-h-[280px] w-max mx-auto px-4">
-              <div className="flex flex-col items-end justify-center gap-4 my-auto shrink-0 w-full">
+            <div className="relative z-10 flex min-h-[240px] m-auto shrink-0 p-2 sm:p-4 min-w-max">
+              <div className="flex flex-col items-end justify-center gap-3 sm:gap-4 my-auto shrink-0 w-full">
               {/* OPERAND ROWS */}
               {Array.from({ length: solverRowCount }).map((_, rIdx) => {
                 const termStr = solverTerms[rIdx] || '';
                 const isLastOperand = rIdx === solverRowCount - 1;
 
                 return (
-                  <div key={rIdx} className="w-full flex items-center justify-end gap-3">
+                  <div key={rIdx} className="w-full flex items-center justify-end gap-2 sm:gap-3">
                     {/* Operator Sign on Last Operand */}
-                    <div className="w-8 flex items-center justify-center">
+                    <div className="w-6 sm:w-8 flex items-center justify-center shrink-0">
                       {isLastOperand ? (
-                        <span className="text-2xl font-black font-mono" style={{ color: 'var(--primary-accent)' }}>
+                        <span className="text-lg sm:text-2xl font-black font-mono" style={{ color: 'var(--primary-accent)' }}>
                           {solverOp === '*' ? '×' : solverOp}
                         </span>
                       ) : null}
                     </div>
 
                     {/* Letter Input Boxes Row */}
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-1.5 sm:gap-2">
                       {Array.from({ length: solverDigitCount }).map((_, cIdx) => {
                         const char = termStr[cIdx] || '';
                         const inputKey = `op-${rIdx}-${cIdx}`;
@@ -1133,7 +1133,13 @@ export const CryptarithmGame: React.FC<CryptarithmGameProps> = ({ onBackToDashbo
                             onChange={(e) => handleSolverCellLetterChange('operand', rIdx, cIdx, e.target.value)}
                             onKeyDown={(e) => handleSolverCellKeyDown('operand', rIdx, cIdx, e)}
                             placeholder="-"
-                            className="w-12 h-12 sm:w-14 sm:h-14 shrink-0 rounded-2xl border text-center font-mono font-black text-xl sm:text-2xl uppercase transition-all focus:outline-none focus:ring-2 focus:ring-amber-400 focus:scale-105"
+                            className={`${
+                              solverDigitCount >= 7
+                                ? 'w-8 h-8 sm:w-11 sm:h-11 md:w-14 md:h-14 text-xs sm:text-lg md:text-2xl rounded-lg sm:rounded-xl'
+                                : solverDigitCount >= 5
+                                ? 'w-9 h-9 sm:w-12 sm:h-12 md:w-14 md:h-14 text-sm sm:text-xl md:text-2xl rounded-xl sm:rounded-2xl'
+                                : 'w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 text-base sm:text-xl md:text-2xl rounded-xl sm:rounded-2xl'
+                            } shrink-0 border text-center font-mono font-black uppercase transition-all focus:outline-none focus:ring-2 focus:ring-amber-400 focus:scale-105`}
                             style={{
                               background: isFilled ? 'var(--badge-bg)' : 'var(--card-bg)',
                               borderColor: isFilled ? 'var(--primary-accent)' : 'var(--card-border)',
@@ -1149,20 +1155,20 @@ export const CryptarithmGame: React.FC<CryptarithmGameProps> = ({ onBackToDashbo
               })}
 
               {/* OPERATOR LINE DIVIDER */}
-              <div className="w-full flex items-center justify-end gap-3 my-1">
-                <div className="w-8" />
+              <div className="w-full flex items-center justify-end gap-2 sm:gap-3 my-1">
+                <div className="w-6 sm:w-8 shrink-0" />
                 <div className="h-1 flex-1 rounded-full" style={{ background: 'var(--primary-accent)' }} />
               </div>
 
               {/* RESULT ROW */}
-              <div className="w-full flex items-center justify-end gap-3">
-                <div className="w-8 flex items-center justify-center">
+              <div className="w-full flex items-center justify-end gap-2 sm:gap-3">
+                <div className="w-6 sm:w-8 flex items-center justify-center shrink-0">
                   <span className="text-xs font-bold uppercase font-mono" style={{ color: 'var(--text-muted)' }}>
                     =
                   </span>
                 </div>
 
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-1.5 sm:gap-2">
                   {Array.from({ length: solverDigitCount }).map((_, cIdx) => {
                         const char = solverResultTerm[cIdx] || '';
                         const inputKey = `res-${cIdx}`;
@@ -1180,7 +1186,13 @@ export const CryptarithmGame: React.FC<CryptarithmGameProps> = ({ onBackToDashbo
                             onChange={(e) => handleSolverCellLetterChange('result', 0, cIdx, e.target.value)}
                             onKeyDown={(e) => handleSolverCellKeyDown('result', 0, cIdx, e)}
                             placeholder="-"
-                            className="w-12 h-12 sm:w-14 sm:h-14 shrink-0 rounded-2xl border text-center font-mono font-black text-xl sm:text-2xl uppercase transition-all focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:scale-105"
+                            className={`${
+                              solverDigitCount >= 7
+                                ? 'w-8 h-8 sm:w-11 sm:h-11 md:w-14 md:h-14 text-xs sm:text-lg md:text-2xl rounded-lg sm:rounded-xl'
+                                : solverDigitCount >= 5
+                                ? 'w-9 h-9 sm:w-12 sm:h-12 md:w-14 md:h-14 text-sm sm:text-xl md:text-2xl rounded-xl sm:rounded-2xl'
+                                : 'w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 text-base sm:text-xl md:text-2xl rounded-xl sm:rounded-2xl'
+                            } shrink-0 border text-center font-mono font-black uppercase transition-all focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:scale-105`}
                             style={{
                               background: isFilled ? 'rgba(16, 185, 129, 0.15)' : 'var(--card-bg)',
                               borderColor: isFilled ? '#10b981' : 'var(--card-border)',

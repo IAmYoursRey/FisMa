@@ -51,7 +51,7 @@ function App() {
   ];
 
   return (
-    <div className="min-h-screen transition-colors duration-300 flex flex-col" style={{ 
+    <div className="min-h-screen transition-colors duration-300 flex flex-col w-full max-w-full overflow-x-hidden" style={{ 
       background: 'var(--bg-primary)',
       color: 'var(--text-primary)'
     }}>
@@ -77,9 +77,9 @@ function App() {
         activeSubject={activeSubject}
       />
 
-      <div className="relative z-10 flex flex-col flex-grow">
-        <main className="flex-grow flex items-center justify-center py-12 px-4 sm:px-6">
-          <div className="w-full max-w-5xl mx-auto flex flex-col items-center">
+      <div className="relative z-10 flex flex-col flex-grow w-full max-w-full min-w-0 overflow-x-hidden">
+        <main className="flex-grow flex flex-col py-4 sm:py-12 w-full max-w-full min-w-0">
+          <div className="w-full max-w-5xl mx-auto flex flex-col min-w-0 px-3 sm:px-6">
             
             {activeSubject === 'home' ? (
               <>
