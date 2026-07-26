@@ -1,0 +1,8 @@
+{
+  "name": "Remix: FisMa",
+  "description": "Platform Pembelajaran Interaktif Fisika \u0026 Matematika dengan Theme System dan Dashboard Modern",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

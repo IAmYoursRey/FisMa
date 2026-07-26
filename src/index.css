@@ -1,0 +1,139 @@
+@import "tailwindcss";
+
+:root {
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  color-scheme: dark light;
+}
+
+code, kbd, pre, .font-mono {
+  font-family: 'JetBrains Mono', monospace;
+}
+
+body {
+  background: var(--bg-gradient, linear-gradient(135deg, #090d16 0%, #030712 50%, #0f172a 100%));
+  color: var(--text-primary, #f8fafc);
+  min-height: 100vh;
+  transition: background 0.5s ease-in-out, color 0.3s ease;
+  overflow-x: hidden;
+}
+
+/* Glassmorphism & Custom Card Classes */
+.fisma-card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: var(--shadow-sm);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.fisma-card:hover {
+  background: var(--card-hover-bg);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--primary-accent);
+}
+
+.fisma-glass-panel {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+.fisma-nav {
+  background: var(--nav-bg);
+  border-bottom: 1px solid var(--glass-border);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  transition: background 0.4s ease, border-color 0.4s ease;
+}
+
+.fisma-footer {
+  background: var(--footer-bg);
+  border-top: 1px solid var(--glass-border);
+  transition: background 0.4s ease, border-color 0.4s ease;
+}
+
+.fisma-btn-primary {
+  background: var(--button-primary-bg);
+  color: var(--button-primary-text);
+  font-weight: 700;
+  box-shadow: var(--accent-glow);
+  transition: all 0.25s ease;
+}
+
+.fisma-btn-primary:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.1);
+  box-shadow: var(--shadow-lg);
+}
+
+.fisma-btn-primary:active {
+  transform: translateY(0);
+}
+
+.fisma-btn-secondary {
+  background: var(--glass-bg);
+  color: var(--text-primary);
+  border: 1px solid var(--card-border);
+  font-weight: 600;
+  transition: all 0.25s ease;
+}
+
+.fisma-btn-secondary:hover {
+  background: var(--card-hover-bg);
+  border-color: var(--primary-accent);
+  color: var(--primary-accent);
+  transform: translateY(-2px);
+}
+
+.fisma-glow-text {
+  text-shadow: 0 0 20px var(--primary-accent);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--card-border);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-accent);
+}
+
+/* Glowing Orb Animations */
+@keyframes float-slow {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-15px) rotate(3deg);
+  }
+}
+
+.animate-float {
+  animation: float-slow 6s ease-in-out infinite;
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    opacity: 0.4;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(1.08);
+  }
+}
+
+.animate-glow {
+  animation: pulse-glow 4s ease-in-out infinite;
+}
