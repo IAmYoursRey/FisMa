@@ -77,7 +77,7 @@ export const ThemeModal: React.FC<ThemeModalProps> = ({ isOpen, onClose }) => {
 
           <button
             onClick={onClose}
-            className="p-2 rounded-xl hover:opacity-80 transition-opacity fisma-btn-secondary"
+            className="p-2 min-w-[44px] min-h-[44px] flex items-center justify-center rounded-xl hover:opacity-80 transition-opacity fisma-btn-secondary active:scale-95"
             aria-label="Tutup Modal"
           >
             <X className="w-5 h-5" />
@@ -85,14 +85,14 @@ export const ThemeModal: React.FC<ThemeModalProps> = ({ isOpen, onClose }) => {
         </div>
 
         {/* Filter Controls */}
-        <div className="py-5 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div className="py-4 sm:py-5 flex flex-col-reverse sm:flex-row items-center justify-between gap-4">
           {/* Category Tabs */}
-          <div className="flex items-center gap-1.5 p-1 rounded-xl border w-full sm:w-auto" style={{ background: 'var(--card-bg)', borderColor: 'var(--card-border)' }}>
+          <div className="flex flex-wrap sm:flex-nowrap items-center gap-1.5 p-1 rounded-xl border w-full sm:w-auto" style={{ background: 'var(--card-bg)', borderColor: 'var(--card-border)' }}>
             {(['all', 'dark', 'light', 'vibrant'] as const).map((cat) => (
               <button
                 key={cat}
                 onClick={() => setSelectedCategory(cat)}
-                className={`px-3 py-1.5 rounded-lg text-xs font-semibold capitalize transition-all ${
+                className={`flex-1 sm:flex-initial px-3 py-2 sm:py-1.5 min-h-[44px] sm:min-h-0 rounded-lg text-sm sm:text-xs font-semibold capitalize transition-all active:scale-95 ${
                   selectedCategory === cat ? 'shadow' : 'opacity-70 hover:opacity-100'
                 }`}
                 style={{
@@ -100,7 +100,7 @@ export const ThemeModal: React.FC<ThemeModalProps> = ({ isOpen, onClose }) => {
                   color: selectedCategory === cat ? 'var(--button-primary-text)' : 'var(--text-primary)',
                 }}
               >
-                {cat === 'all' ? 'Semua Tema' : cat}
+                {cat === 'all' ? 'Semua' : cat}
               </button>
             ))}
           </div>
@@ -113,7 +113,7 @@ export const ThemeModal: React.FC<ThemeModalProps> = ({ isOpen, onClose }) => {
               placeholder="Cari tema..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-9 pr-4 py-2 rounded-xl text-xs border focus:outline-none transition-colors"
+              className="w-full pl-9 pr-4 py-2.5 sm:py-2 min-h-[44px] sm:min-h-0 rounded-xl text-base sm:text-xs border focus:outline-none transition-colors"
               style={{
                 background: 'var(--card-bg)',
                 borderColor: 'var(--card-border)',
@@ -124,7 +124,7 @@ export const ThemeModal: React.FC<ThemeModalProps> = ({ isOpen, onClose }) => {
         </div>
 
         {/* Grid Theme Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 max-h-[60vh] overflow-y-auto pr-1 py-2">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 max-h-[55vh] overflow-y-auto pr-1 py-2">
           {filteredThemes.map((t) => {
             const isActive = currentTheme.id === t.id;
 
@@ -228,11 +228,11 @@ export const ThemeModal: React.FC<ThemeModalProps> = ({ isOpen, onClose }) => {
         </div>
 
         {/* Modal Footer */}
-        <div className="mt-6 pt-4 border-t flex items-center justify-between text-xs" style={{ borderColor: 'var(--glass-border)', color: 'var(--text-muted)' }}>
-          <p>Sistem menyimpan pilihan tema di LocalStorage secara otomatis.</p>
+        <div className="mt-6 pt-4 border-t flex flex-col sm:flex-row items-center justify-between gap-4 text-xs" style={{ borderColor: 'var(--glass-border)', color: 'var(--text-muted)' }}>
+          <p className="text-center sm:text-left">Sistem menyimpan pilihan tema di LocalStorage secara otomatis.</p>
           <button
             onClick={onClose}
-            className="fisma-btn-primary px-5 py-2.5 rounded-xl text-xs font-bold"
+            className="w-full sm:w-auto fisma-btn-primary px-6 py-3 sm:py-2.5 min-h-[48px] sm:min-h-0 rounded-xl text-sm sm:text-xs font-bold active:scale-95 transition-transform"
           >
             Selesai
           </button>

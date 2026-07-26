@@ -494,10 +494,10 @@ export const CryptarithmGame: React.FC<CryptarithmGameProps> = ({ onBackToDashbo
       >
         <button
           onClick={onBackToDashboard}
-          className="fisma-btn-secondary px-4 py-3 min-h-[44px] rounded-xl text-xs sm:text-sm font-bold inline-flex items-center justify-center sm:justify-start gap-2 shadow-sm"
+          className="fisma-btn-secondary px-4 py-3 min-h-[44px] rounded-xl text-xs sm:text-sm font-bold inline-flex items-center justify-center sm:justify-start gap-2 shadow-sm transition-transform active:scale-95"
         >
           <ArrowLeft className="w-4 h-4 shrink-0" />
-          <span>Kembali ke Dashboard</span>
+          <span>Kembali</span>
         </button>
 
         {/* Tab Selector */}
@@ -508,7 +508,7 @@ export const CryptarithmGame: React.FC<CryptarithmGameProps> = ({ onBackToDashbo
           <button
             onClick={() => setActiveTab('game')}
             className={`flex-1 sm:flex-initial px-4 py-2.5 min-h-[42px] rounded-xl text-xs sm:text-sm font-bold flex items-center justify-center gap-2 transition-all ${
-              activeTab === 'game' ? 'shadow-md' : 'opacity-70 hover:opacity-100'
+              activeTab === 'game' ? 'shadow-md scale-[1.02]' : 'opacity-70 hover:opacity-100 hover:bg-black/5 dark:hover:bg-white/5'
             }`}
             style={{
               background: activeTab === 'game' ? 'var(--button-primary-bg)' : 'transparent',
@@ -516,13 +516,13 @@ export const CryptarithmGame: React.FC<CryptarithmGameProps> = ({ onBackToDashbo
             }}
           >
             <Gamepad2 className="w-4 h-4 shrink-0" />
-            <span>Game Cryptarithm</span>
+            <span>Game</span>
           </button>
 
           <button
             onClick={() => setActiveTab('solver')}
             className={`flex-1 sm:flex-initial px-4 py-2.5 min-h-[42px] rounded-xl text-xs sm:text-sm font-bold flex items-center justify-center gap-2 transition-all ${
-              activeTab === 'solver' ? 'shadow-md' : 'opacity-70 hover:opacity-100'
+              activeTab === 'solver' ? 'shadow-md scale-[1.02]' : 'opacity-70 hover:opacity-100 hover:bg-black/5 dark:hover:bg-white/5'
             }`}
             style={{
               background: activeTab === 'solver' ? 'var(--button-primary-bg)' : 'transparent',
@@ -530,7 +530,7 @@ export const CryptarithmGame: React.FC<CryptarithmGameProps> = ({ onBackToDashbo
             }}
           >
             <Cpu className="w-4 h-4 shrink-0" />
-            <span>Bot Solver</span>
+            <span>Solver</span>
           </button>
         </div>
       </div>
@@ -626,11 +626,10 @@ export const CryptarithmGame: React.FC<CryptarithmGameProps> = ({ onBackToDashbo
 
               {/* DYNAMIC PUZZLE BOARD & INPUTS */}
               <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-start">
-                
-                {/* Vertical Math Display (Dynamic for 2 to 5 rows & 2 to 8 digits) */}
-                <div className="md:col-span-5 flex justify-center">
+                               {/* Vertical Math Display (Dynamic for 2 to 5 rows & 2 to 8 digits) */}
+                <div className="md:col-span-5 flex justify-center w-full">
                   <div
-                    className="fisma-card p-6 sm:p-8 rounded-3xl border w-full max-w-sm flex flex-col items-end shadow-2xl relative overflow-x-auto"
+                    className="fisma-card p-6 sm:p-8 rounded-3xl border w-full max-w-sm flex flex-col shadow-2xl relative overflow-x-auto custom-scrollbar"
                     style={{
                       background: 'var(--card-bg)',
                       borderColor: 'var(--card-border)',
@@ -638,73 +637,74 @@ export const CryptarithmGame: React.FC<CryptarithmGameProps> = ({ onBackToDashbo
                     }}
                   >
                     <div
-                      className="absolute -top-12 -left-12 w-32 h-32 rounded-full blur-2xl opacity-20"
+                      className="absolute -top-12 -left-12 w-32 h-32 rounded-full blur-2xl opacity-20 pointer-events-none"
                       style={{ background: 'var(--primary-accent)' }}
                     />
 
-                    {/* Render N Operand Terms */}
-                    {currentPuzzle.terms.map((term, idx) => {
-                      const isLastOperand = idx === currentPuzzle.terms.length - 1;
-                      const opSym = currentPuzzle.operation === '*' ? '×' : currentPuzzle.operation;
-
-                      return (
-                        <div
-                          key={idx}
-                          className={`font-mono font-black tracking-widest text-right flex items-center justify-end gap-3 mb-1 ${
-                            maxDigitLen >= 6 ? 'text-xl sm:text-2xl' : 'text-2xl sm:text-3xl'
-                          }`}
-                        >
-                          {isLastOperand && (
-                            <span className="text-lg sm:text-xl font-black" style={{ color: 'var(--primary-accent)' }}>
-                              {opSym}
-                            </span>
-                          )}
-                          <span style={{ color: 'var(--text-primary)' }}>
-                            {term.split('').map((char, cIdx) => {
-                              const val = userInputs[char];
-                              const isFilled = val !== undefined && val !== '';
-                              return (
-                                <span
-                                  key={cIdx}
-                                  className={isFilled ? 'text-amber-400 font-extrabold underline decoration-amber-400/50' : ''}
-                                  style={{
-                                    color: isFilled ? 'var(--primary-accent)' : 'var(--text-primary)',
-                                  }}
-                                >
-                                  {isFilled ? val : char}
-                                </span>
-                              );
-                            })}
-                          </span>
-                        </div>
-                      );
-                    })}
-
-                    {/* Math Divider Line */}
-                    <div className="w-full h-1 my-2 rounded-full" style={{ background: 'var(--primary-accent)' }} />
-
-                    {/* Result Term */}
-                    <div
-                      className={`font-mono font-black tracking-widest text-right ${
-                        maxDigitLen >= 6 ? 'text-2xl sm:text-3xl' : 'text-3xl sm:text-4xl'
-                      }`}
-                      style={{ color: 'var(--primary-accent)' }}
-                    >
-                      {currentPuzzle.resultTerm.split('').map((char, cIdx) => {
-                        const val = userInputs[char];
-                        const isFilled = val !== undefined && val !== '';
+                    <div className="w-max ml-auto flex flex-col items-end">
+                      {/* Render N Operand Terms */}
+                      {currentPuzzle.terms.map((term, idx) => {
+                        const isLastOperand = idx === currentPuzzle.terms.length - 1;
+                        const opSym = currentPuzzle.operation === '*' ? '×' : currentPuzzle.operation;
                         return (
-                          <span
-                            key={cIdx}
-                            className={isFilled ? 'text-amber-400 font-extrabold underline decoration-amber-400/50' : ''}
-                            style={{
-                              color: isFilled ? 'var(--primary-accent)' : 'var(--text-primary)',
-                            }}
+                          <div
+                            key={idx}
+                            className={`font-mono font-black tracking-widest text-right flex items-center justify-end gap-3 mb-1 ${
+                              maxDigitLen >= 6 ? 'text-xl sm:text-2xl' : 'text-2xl sm:text-3xl'
+                            }`}
                           >
-                            {isFilled ? val : char}
-                          </span>
+                            {isLastOperand && (
+                              <span className="text-lg sm:text-xl font-black shrink-0" style={{ color: 'var(--primary-accent)' }}>
+                                {opSym}
+                              </span>
+                            )}
+                            <span className="shrink-0" style={{ color: 'var(--text-primary)' }}>
+                              {term.split('').map((char, cIdx) => {
+                                const val = userInputs[char];
+                                const isFilled = val !== undefined && val !== '';
+                                return (
+                                  <span
+                                    key={cIdx}
+                                    className={isFilled ? 'text-amber-400 font-extrabold underline decoration-amber-400/50' : ''}
+                                    style={{
+                                      color: isFilled ? 'var(--primary-accent)' : 'var(--text-primary)',
+                                    }}
+                                  >
+                                    {isFilled ? val : char}
+                                  </span>
+                                );
+                              })}
+                            </span>
+                          </div>
                         );
                       })}
+
+                      {/* Math Divider Line */}
+                      <div className="w-full h-1 my-2 rounded-full" style={{ background: 'var(--primary-accent)' }} />
+
+                      {/* Result Term */}
+                      <div
+                        className={`font-mono font-black tracking-widest text-right shrink-0 ${
+                          maxDigitLen >= 6 ? 'text-2xl sm:text-3xl' : 'text-3xl sm:text-4xl'
+                        }`}
+                        style={{ color: 'var(--primary-accent)' }}
+                      >
+                        {currentPuzzle.resultTerm.split('').map((char, cIdx) => {
+                          const val = userInputs[char];
+                          const isFilled = val !== undefined && val !== '';
+                          return (
+                            <span
+                              key={cIdx}
+                              className={isFilled ? 'text-amber-400 font-extrabold underline decoration-amber-400/50' : ''}
+                              style={{
+                                color: isFilled ? 'var(--primary-accent)' : 'var(--text-primary)',
+                              }}
+                            >
+                              {isFilled ? val : char}
+                            </span>
+                          );
+                        })}
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -927,11 +927,11 @@ export const CryptarithmGame: React.FC<CryptarithmGameProps> = ({ onBackToDashbo
                 <Cpu className="w-5 h-5" />
               </div>
               <h2 className="text-2xl font-black tracking-tight" style={{ color: 'var(--text-primary)' }}>
-                Bot Solver Dynamic Cryptarithm
+                Solver Cryptarithm
               </h2>
             </div>
             <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
-              Mendukung konfigurasi dinamis N Baris Operan & N Digit secara otomatis.
+              Solver otomatis untuk konfigurasi baris dan digit dinamis.
             </p>
           </div>
 
@@ -941,10 +941,10 @@ export const CryptarithmGame: React.FC<CryptarithmGameProps> = ({ onBackToDashbo
             style={{ background: 'var(--glass-bg)', borderColor: 'var(--glass-border)' }}
           >
             <span className="text-xs font-bold uppercase tracking-wider block" style={{ color: 'var(--text-muted)' }}>
-              Pengaturan Grid Matrix Pertanyaan Bot Solver:
+              Pengaturan Grid:
             </span>
 
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 items-center">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 items-center">
               {/* 1. Baris Operan */}
               <div className="space-y-1.5">
                 <span className="text-xs font-bold block" style={{ color: 'var(--text-primary)' }}>
@@ -1078,7 +1078,7 @@ export const CryptarithmGame: React.FC<CryptarithmGameProps> = ({ onBackToDashbo
 
           {/* VISUAL MATRIX LETTER BOXES CONTAINER (KOTAK KOSONG UNTUK ISIAN HURUF) */}
           <div
-            className="relative w-full py-8 my-4 rounded-3xl border overflow-x-auto select-none transition-colors flex flex-col items-center justify-center min-h-[340px]"
+            className="relative w-full py-8 my-4 rounded-3xl border overflow-x-auto select-none transition-colors custom-scrollbar"
             style={{
               background: 'var(--glass-bg)',
               borderColor: 'var(--glass-border)',
@@ -1096,7 +1096,8 @@ export const CryptarithmGame: React.FC<CryptarithmGameProps> = ({ onBackToDashbo
             />
 
             {/* LETTER GRID MATRIX */}
-            <div className="relative z-10 flex flex-col items-end justify-center gap-4 my-auto shrink-0 px-4">
+            <div className="relative z-10 flex min-h-[280px] w-max mx-auto px-4">
+              <div className="flex flex-col items-end justify-center gap-4 my-auto shrink-0 w-full">
               {/* OPERAND ROWS */}
               {Array.from({ length: solverRowCount }).map((_, rIdx) => {
                 const termStr = solverTerms[rIdx] || '';
@@ -1191,6 +1192,7 @@ export const CryptarithmGame: React.FC<CryptarithmGameProps> = ({ onBackToDashbo
                       })}
                     </div>
                   </div>
+                </div>
             </div>
           </div>
 
@@ -1201,7 +1203,7 @@ export const CryptarithmGame: React.FC<CryptarithmGameProps> = ({ onBackToDashbo
             className="fisma-btn-primary w-full py-3.5 sm:py-4 px-5 sm:px-6 rounded-xl sm:rounded-2xl text-sm sm:text-base font-extrabold flex items-center justify-center gap-2.5 sm:gap-3 shadow-lg hover:scale-[1.01] active:scale-[0.98] transition-all min-h-[48px]"
           >
             <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 shrink-0" />
-            <span>Generate Solusi Otomatis</span>
+            <span>Cari Solusi</span>
           </button>
 
           {/* Solver Result Section */}

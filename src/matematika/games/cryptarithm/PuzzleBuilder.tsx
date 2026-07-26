@@ -560,7 +560,7 @@ export const PuzzleBuilder: React.FC<PuzzleBuilderProps> = ({
         {/* OUTSIDE CONTROL BUTTONS (BARIS & DIGIT) */}
         <div className="p-4 rounded-2xl border space-y-3" style={{ background: 'var(--glass-bg)', borderColor: 'var(--card-border)' }}>
           <span className="text-xs font-bold uppercase tracking-wider block" style={{ color: 'var(--text-muted)' }}>
-            Pengaturan Struktur Grid Matrix:
+            Pengaturan Grid:
           </span>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -658,7 +658,7 @@ export const PuzzleBuilder: React.FC<PuzzleBuilderProps> = ({
           style={{ borderColor: 'var(--glass-border)' }}
         >
           <span className="text-xs sm:text-sm font-bold uppercase tracking-wider block" style={{ color: 'var(--text-muted)' }}>
-            Pengaturan Sesi & Aturan Main:
+            Aturan Permainan:
           </span>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
@@ -671,7 +671,7 @@ export const PuzzleBuilder: React.FC<PuzzleBuilderProps> = ({
                 <button
                   type="button"
                   onClick={() => onChange({ ...config, mode: 'endless' })}
-                  className={`flex-1 py-2 px-3 rounded-xl text-xs sm:text-sm font-bold transition-all text-center whitespace-nowrap min-h-[38px] flex items-center justify-center ${
+                  className={`flex-1 py-2 px-3 rounded-xl text-xs sm:text-sm font-bold transition-all text-center min-h-[38px] flex items-center justify-center ${
                     config.mode === 'endless' ? 'shadow-md' : 'opacity-70'
                   }`}
                   style={{
@@ -684,7 +684,7 @@ export const PuzzleBuilder: React.FC<PuzzleBuilderProps> = ({
                 <button
                   type="button"
                   onClick={() => onChange({ ...config, mode: 'fixed', targetQuestions: config.targetQuestions || 1 })}
-                  className={`flex-1 py-2 px-3 rounded-xl text-xs sm:text-sm font-bold transition-all text-center whitespace-nowrap min-h-[38px] flex items-center justify-center ${
+                  className={`flex-1 py-2 px-3 rounded-xl text-xs sm:text-sm font-bold transition-all text-center min-h-[38px] flex items-center justify-center ${
                     config.mode === 'fixed' ? 'shadow-md' : 'opacity-70'
                   }`}
                   style={{
@@ -699,7 +699,7 @@ export const PuzzleBuilder: React.FC<PuzzleBuilderProps> = ({
               {config.mode === 'fixed' && (
                 <div className="pt-1.5 space-y-1">
                   <label className="text-[11px] sm:text-xs font-semibold block" style={{ color: 'var(--text-secondary)' }}>
-                    Target Jumlah Soal (Default: 1):
+                    Target Jumlah Soal:
                   </label>
                   <input
                     type="number"
@@ -731,7 +731,7 @@ export const PuzzleBuilder: React.FC<PuzzleBuilderProps> = ({
                 <button
                   type="button"
                   onClick={() => onChange({ ...config, toleranceEnabled: false })}
-                  className={`flex-1 py-2 px-3 rounded-xl text-xs sm:text-sm font-bold transition-all text-center whitespace-nowrap min-h-[38px] flex items-center justify-center ${
+                  className={`flex-1 py-2 px-3 rounded-xl text-xs sm:text-sm font-bold transition-all text-center min-h-[38px] flex items-center justify-center ${
                     !config.toleranceEnabled ? 'shadow-md' : 'opacity-70'
                   }`}
                   style={{
@@ -744,7 +744,7 @@ export const PuzzleBuilder: React.FC<PuzzleBuilderProps> = ({
                 <button
                   type="button"
                   onClick={() => onChange({ ...config, toleranceEnabled: true, maxTolerance: config.maxTolerance || 1 })}
-                  className={`flex-1 py-2 px-3 rounded-xl text-xs sm:text-sm font-bold transition-all text-center whitespace-nowrap min-h-[38px] flex items-center justify-center ${
+                  className={`flex-1 py-2 px-3 rounded-xl text-xs sm:text-sm font-bold transition-all text-center min-h-[38px] flex items-center justify-center ${
                     config.toleranceEnabled ? 'shadow-md' : 'opacity-70'
                   }`}
                   style={{
@@ -759,7 +759,7 @@ export const PuzzleBuilder: React.FC<PuzzleBuilderProps> = ({
               {config.toleranceEnabled && (
                 <div className="pt-1.5 space-y-1">
                   <label className="text-[11px] sm:text-xs font-semibold block" style={{ color: 'var(--text-secondary)' }}>
-                    Maksimal Percobaan Gagal per Soal (Default: 1):
+                    Maksimal Kesalahan:
                   </label>
                   <input
                     type="number"
@@ -799,7 +799,7 @@ export const PuzzleBuilder: React.FC<PuzzleBuilderProps> = ({
                       key={item.id}
                       type="button"
                       onClick={() => handleTimerChange(item.id as any)}
-                      className={`py-3 px-4 rounded-2xl border text-center font-bold text-xs sm:text-sm transition-all whitespace-nowrap min-h-[44px] flex items-center justify-center ${
+                      className={`py-3 px-4 rounded-2xl border text-center font-bold text-xs sm:text-sm transition-all min-h-[44px] flex items-center justify-center ${
                         isSelected ? 'ring-2 scale-[1.02] shadow-sm' : 'opacity-70 hover:opacity-100'
                       }`}
                       style={{
@@ -817,7 +817,7 @@ export const PuzzleBuilder: React.FC<PuzzleBuilderProps> = ({
               {timerMode === 'custom' && (
                 <div className="pt-2 max-w-xs space-y-1">
                   <label className="text-[11px] sm:text-xs font-semibold block" style={{ color: 'var(--text-secondary)' }}>
-                    Durasi Timer Custom (Detik) - Default: 1:
+                    Durasi Timer (Detik):
                   </label>
                   <input
                     type="number"

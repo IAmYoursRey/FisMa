@@ -133,10 +133,10 @@ export const BilanganBulatDashboard: React.FC<BilanganBulatDashboardProps> = ({
       >
         <button
           onClick={onBackToDashboard}
-          className="fisma-btn-secondary px-4 py-3 min-h-[44px] rounded-xl text-xs sm:text-sm font-bold inline-flex items-center justify-center sm:justify-start gap-2 shadow-sm"
+          className="fisma-btn-secondary px-4 py-3 min-h-[44px] rounded-xl text-xs sm:text-sm font-bold inline-flex items-center justify-center sm:justify-start gap-2 shadow-sm transition-transform active:scale-95"
         >
           <ArrowLeft className="w-4 h-4 shrink-0" />
-          <span>Kembali ke Dashboard Utama</span>
+          <span>Kembali</span>
         </button>
 
         {/* Tab Selector */}
@@ -145,26 +145,26 @@ export const BilanganBulatDashboard: React.FC<BilanganBulatDashboardProps> = ({
           style={{ background: 'var(--card-bg)', borderColor: 'var(--card-border)' }}
         >
           <button
-            className={`flex-1 sm:flex-initial px-4 py-2.5 min-h-[42px] rounded-xl text-xs sm:text-sm font-bold flex items-center justify-center gap-2 transition-all shadow-md`}
+            className={`flex-1 sm:flex-initial px-4 py-2.5 min-h-[42px] rounded-xl text-xs sm:text-sm font-bold flex items-center justify-center gap-2 transition-all shadow-md scale-[1.02]`}
             style={{
               background: 'var(--button-primary-bg)',
               color: 'var(--button-primary-text)',
             }}
           >
             <Sparkles className="w-4 h-4 shrink-0" />
-            <span>Game Edukasi</span>
+            <span>Game</span>
           </button>
 
           <button
             onClick={onOpenSolver}
-            className={`flex-1 sm:flex-initial px-4 py-2.5 min-h-[42px] rounded-xl text-xs sm:text-sm font-bold flex items-center justify-center gap-2 transition-all opacity-70 hover:opacity-100`}
+            className={`flex-1 sm:flex-initial px-4 py-2.5 min-h-[42px] rounded-xl text-xs sm:text-sm font-bold flex items-center justify-center gap-2 transition-all opacity-70 hover:opacity-100 hover:bg-black/5 dark:hover:bg-white/5`}
             style={{
               background: 'transparent',
               color: 'var(--text-primary)',
             }}
           >
             <Cpu className="w-4 h-4 shrink-0" />
-            <span>Bot Solver</span>
+            <span>Solver</span>
           </button>
         </div>
       </div>
@@ -184,7 +184,7 @@ export const BilanganBulatDashboard: React.FC<BilanganBulatDashboardProps> = ({
           </div>
           <div>
             <span className="text-xs font-bold block" style={{ color: 'var(--text-muted)' }}>
-              Skor Tertinggi Lokal
+              Skor Tertinggi
             </span>
             <span className="text-2xl font-black" style={{ color: 'var(--text-primary)' }}>
               {savedStats.highScore} Poin
@@ -203,7 +203,7 @@ export const BilanganBulatDashboard: React.FC<BilanganBulatDashboardProps> = ({
         <div className="flex items-center gap-3 border-b pb-4" style={{ borderColor: 'var(--glass-border)' }}>
           <Sliders className="w-5 h-5" style={{ color: 'var(--primary-accent)' }} />
           <h2 className="text-lg sm:text-xl font-extrabold" style={{ color: 'var(--text-primary)' }}>
-            Pengaturan Sesi Permainan
+            Pengaturan Permainan
           </h2>
         </div>
 
@@ -213,17 +213,17 @@ export const BilanganBulatDashboard: React.FC<BilanganBulatDashboardProps> = ({
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
               <div>
                 <label className="text-xs sm:text-sm font-bold block" style={{ color: 'var(--text-primary)' }}>
-                  Jumlah Rentang Angka & Operasi:
+                  Rentang Angka & Kotak:
                 </label>
                 <span className="text-[11px]" style={{ color: 'var(--text-secondary)' }}>
-                  Atur jumlah rentang angka dan operasi di antaranya
+                  Sesuaikan batas kotak angka.
                 </span>
               </div>
 
-              <div className="flex items-center gap-2">
+              <div className="flex flex-wrap items-center gap-2 w-full sm:w-auto mt-2 sm:mt-0">
                 {/* Preset Kesulitan */}
                 <div
-                  className="grid grid-cols-4 gap-1 p-1 rounded-2xl border min-h-[40px]"
+                  className="grid grid-cols-4 gap-1 p-1 rounded-2xl border min-h-[40px] w-full sm:w-auto shrink-0"
                   style={{ background: 'var(--glass-bg)', borderColor: 'var(--card-border)' }}
                 >
                   {[
@@ -238,7 +238,7 @@ export const BilanganBulatDashboard: React.FC<BilanganBulatDashboardProps> = ({
                         key={item.id}
                         type="button"
                         onClick={() => handleDifficultyPreset(item.id as any)}
-                        className={`py-1 px-2 rounded-xl text-xs font-bold transition-all text-center whitespace-nowrap flex items-center justify-center ${
+                        className={`py-1 px-2 rounded-xl text-xs font-bold transition-all text-center flex items-center justify-center ${
                           isSelected ? 'shadow-md scale-105' : 'opacity-70 hover:opacity-100'
                         }`}
                         style={{
@@ -514,7 +514,7 @@ export const BilanganBulatDashboard: React.FC<BilanganBulatDashboardProps> = ({
               <button
                 type="button"
                 onClick={() => setConfig((prev) => ({ ...prev, questionCountMode: 'endless' }))}
-                className={`flex-1 py-2 px-3 rounded-xl text-xs sm:text-sm font-bold transition-all text-center whitespace-nowrap min-h-[38px] flex items-center justify-center ${
+                className={`flex-1 py-2 px-2 sm:px-3 rounded-xl text-[10px] sm:text-sm font-bold transition-all text-center min-h-[38px] flex items-center justify-center ${
                   config.questionCountMode === 'endless' ? 'shadow-md' : 'opacity-70'
                 }`}
                 style={{
@@ -522,7 +522,7 @@ export const BilanganBulatDashboard: React.FC<BilanganBulatDashboardProps> = ({
                   color: config.questionCountMode === 'endless' ? 'var(--button-primary-text)' : 'var(--text-primary)',
                 }}
               >
-                Tanpa Batas / Infinite
+                Tanpa Batas
               </button>
               <button
                 type="button"
@@ -533,7 +533,7 @@ export const BilanganBulatDashboard: React.FC<BilanganBulatDashboardProps> = ({
                     targetQuestions: prev.targetQuestions || 1,
                   }))
                 }
-                className={`flex-1 py-2 px-3 rounded-xl text-xs sm:text-sm font-bold transition-all text-center whitespace-nowrap min-h-[38px] flex items-center justify-center ${
+                className={`flex-1 py-2 px-2 sm:px-3 rounded-xl text-[10px] sm:text-sm font-bold transition-all text-center min-h-[38px] flex items-center justify-center ${
                   config.questionCountMode === 'fixed' ? 'shadow-md' : 'opacity-70'
                 }`}
                 style={{
@@ -548,7 +548,7 @@ export const BilanganBulatDashboard: React.FC<BilanganBulatDashboardProps> = ({
             {config.questionCountMode === 'fixed' && (
               <div className="pt-2 space-y-1">
                 <label className="text-[11px] font-semibold block" style={{ color: 'var(--text-secondary)' }}>
-                  Jumlah Soal Custom (Default: 1):
+                  Jumlah Soal:
                 </label>
                 <div
                   className="flex items-center w-full rounded-xl border p-1"
@@ -615,7 +615,7 @@ export const BilanganBulatDashboard: React.FC<BilanganBulatDashboardProps> = ({
               <button
                 type="button"
                 onClick={() => setConfig((prev) => ({ ...prev, useTimeLimit: false, timeLimitSec: 0 }))}
-                className={`flex-1 py-2 px-3 rounded-xl text-xs sm:text-sm font-bold transition-all text-center whitespace-nowrap min-h-[38px] flex items-center justify-center ${
+                className={`flex-1 py-2 px-2 sm:px-3 rounded-xl text-[10px] sm:text-sm font-bold transition-all text-center min-h-[38px] flex items-center justify-center ${
                   !config.useTimeLimit || config.timeLimitSec === 0 ? 'shadow-md' : 'opacity-70'
                 }`}
                 style={{
@@ -623,7 +623,7 @@ export const BilanganBulatDashboard: React.FC<BilanganBulatDashboardProps> = ({
                   color: !config.useTimeLimit || config.timeLimitSec === 0 ? 'var(--button-primary-text)' : 'var(--text-primary)',
                 }}
               >
-                Tanpa Timer / Off
+                Tanpa Timer
               </button>
               <button
                 type="button"
@@ -634,7 +634,7 @@ export const BilanganBulatDashboard: React.FC<BilanganBulatDashboardProps> = ({
                     timeLimitSec: prev.timeLimitSec > 0 ? prev.timeLimitSec : 1,
                   }))
                 }
-                className={`flex-1 py-2 px-3 rounded-xl text-xs sm:text-sm font-bold transition-all text-center whitespace-nowrap min-h-[38px] flex items-center justify-center ${
+                className={`flex-1 py-2 px-2 sm:px-3 rounded-xl text-[10px] sm:text-sm font-bold transition-all text-center min-h-[38px] flex items-center justify-center ${
                   config.useTimeLimit && config.timeLimitSec > 0 ? 'shadow-md' : 'opacity-70'
                 }`}
                 style={{
@@ -649,7 +649,7 @@ export const BilanganBulatDashboard: React.FC<BilanganBulatDashboardProps> = ({
             {config.useTimeLimit && config.timeLimitSec > 0 && (
               <div className="pt-2 space-y-1">
                 <label className="text-[11px] font-semibold block" style={{ color: 'var(--text-secondary)' }}>
-                  Durasi Timer Custom (Detik) - Default: 1:
+                  Durasi (Detik):
                 </label>
                 <div
                   className="flex items-center w-full rounded-xl border p-1"
@@ -712,7 +712,7 @@ export const BilanganBulatDashboard: React.FC<BilanganBulatDashboardProps> = ({
             className="fisma-btn-primary w-full py-3.5 sm:py-4 px-6 rounded-xl sm:rounded-2xl text-sm sm:text-base font-extrabold flex items-center justify-center gap-3 shadow-lg hover:scale-[1.01] active:scale-[0.98] transition-all min-h-[48px]"
           >
             <Play className="w-5 h-5 fill-current shrink-0" />
-            <span>Mulai Permainan Bilangan Bulat</span>
+            <span>Mulai Permainan</span>
           </button>
         </div>
       </div>

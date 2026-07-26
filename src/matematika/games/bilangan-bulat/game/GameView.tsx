@@ -18,6 +18,7 @@ import {
   GameConfig,
   QuestionItem,
   GameStats,
+  OperationType,
   generateQuestion,
   loadSavedStats,
   saveStats,
@@ -296,10 +297,10 @@ export const GameView: React.FC<GameViewProps> = ({
               className="px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider"
               style={{ background: 'var(--badge-bg)', color: 'var(--badge-text)' }}
             >
-              Sesi Permainan Selesai
+              Permainan Selesai
             </span>
             <h2 className="text-3xl font-black mt-2" style={{ color: 'var(--text-primary)' }}>
-              Hasil Akhir Kamu
+              Hasil Akhir
             </h2>
           </div>
 
@@ -401,7 +402,7 @@ export const GameView: React.FC<GameViewProps> = ({
               className="fisma-btn-secondary flex-1 py-3.5 rounded-2xl text-sm font-bold flex items-center justify-center gap-2"
             >
               <ArrowLeft className="w-4 h-4" />
-              Kembali ke Dashboard
+              Kembali
             </button>
           </div>
         </div>
@@ -416,16 +417,16 @@ export const GameView: React.FC<GameViewProps> = ({
   return (
     <div className="max-w-2xl mx-auto px-4 py-6 sm:py-8 space-y-6 animate-fade-in">
       {/* Top Header Controls */}
-      <div className="flex items-center justify-between gap-4">
+      <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 mb-4">
         <button
           onClick={onBackToDashboard}
-          className="fisma-btn-secondary px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-bold inline-flex items-center gap-2 shadow-sm min-h-[44px]"
+          className="fisma-btn-secondary px-3.5 py-2.5 min-h-[48px] sm:min-h-[44px] rounded-xl text-xs sm:text-sm font-bold inline-flex items-center justify-center sm:justify-start gap-2 shadow-sm w-full sm:w-auto transition-transform active:scale-95"
         >
           <ArrowLeft className="w-4 h-4 shrink-0" />
           <span>Kembali</span>
         </button>
 
-        <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center justify-center sm:justify-end gap-2 w-full sm:w-auto">
           {/* Streak indicator */}
           {stats.currentStreak > 1 && (
             <div
@@ -538,14 +539,13 @@ export const GameView: React.FC<GameViewProps> = ({
                 Hitung Nilai Operasi:
               </span>
 
-              {/* Scrollable Horizontal Container */}
-              <div className="w-full overflow-x-auto custom-scrollbar py-2 px-1 text-center">
+              <div className="w-full py-2 px-1">
                 <div
-                  className={`mx-auto font-black font-mono tracking-wide whitespace-nowrap inline-flex items-center justify-center gap-2 sm:gap-3 shrink-0 ${fontSizeClass}`}
-                  style={{ color: 'var(--text-primary)', width: 'max-content' }}
+                  className={`mx-auto font-black font-mono tracking-wide flex flex-wrap items-center justify-center gap-2 sm:gap-3 ${fontSizeClass}`}
+                  style={{ color: 'var(--text-primary)' }}
                 >
                   {currentQuestion.numbers && currentQuestion.numbers.length > 0 ? (
-                    <div className="flex items-center gap-2 sm:gap-3 shrink-0">
+                    <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3">
                       {currentQuestion.numbers.map((num, idx) => {
                         const strNum = num < 0 ? `(${num})` : `${num}`;
                         const rawOp = currentQuestion.ops && idx < currentQuestion.ops.length ? currentQuestion.ops[idx] : null;
@@ -665,7 +665,7 @@ export const GameView: React.FC<GameViewProps> = ({
               style={{ color: 'var(--primary-accent)' }}
             >
               <Sparkles className="w-3.5 h-3.5 shrink-0" />
-              <span>Bingung? Buka Bot Solver untuk Soal Ini</span>
+              <span>Bingung? Buka Solver</span>
             </button>
           </div>
         )}
