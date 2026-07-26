@@ -13,6 +13,7 @@ import {
 import { useTheme } from '../../services/themeService';
 import { CryptarithmGame } from '../../matematika/games/cryptarithm/CryptarithmGame';
 import { BilanganBulatModule } from '../../matematika/games/bilangan-bulat/BilanganBulatModule';
+import { PersamaanKuadratModule } from '../../matematika/games/persamaan-kuadrat/PersamaanKuadratModule';
 
 interface PlaceholderViewProps {
   subject: 'fisika' | 'matematika';
@@ -34,6 +35,10 @@ export const PlaceholderView: React.FC<PlaceholderViewProps> = ({
 
   if (activeGame === 'bilangan-bulat') {
     return <BilanganBulatModule onBackToDashboard={() => setActiveGame(null)} />;
+  }
+  
+  if (activeGame === 'persamaan-kuadrat') {
+    return <PersamaanKuadratModule onBackToDashboard={() => setActiveGame(null)} />;
   }
 
   const details = isPhysics
@@ -70,17 +75,22 @@ export const PlaceholderView: React.FC<PlaceholderViewProps> = ({
             title: 'Bilangan Bulat',
             subtitle: 'Latihan Operasi Hitung',
             icon: Zap,
+            badge: 'Live',
+          },
+          {
+            id: 'persamaan-kuadrat',
+            title: 'Persamaan Kuadrat',
+            subtitle: 'Grafik & Kalkulasi Akar',
+            icon: Calculator,
             badge: 'Preview',
           },
         ],
         plannedGames: [
-          'Persamaan Kuadrat',
           'Lab Geometri',
           'Logika & Himpunan',
         ],
         plannedSolvers: [
           'Step-by-Step Aljabar',
-          'Visualizer Grafik',
         ],
       };
 

@@ -112,8 +112,9 @@ export const PuzzleBuilder: React.FC<PuzzleBuilderProps> = ({
     setOperandActiveCounts((prev) => {
       if (prev.length === rowCount) return prev;
       if (prev.length < rowCount) {
-        // New row starts with 0 active digits (all cells in new row start OFF / Mati!)
-        const added = Array(rowCount - prev.length).fill(0);
+        // Baris baru mewarisi jumlah digit aktif dari baris terakhir
+        const lastCount = prev.length > 0 ? prev[prev.length - 1] : 2;
+        const added = Array(rowCount - prev.length).fill(lastCount);
         return [...prev, ...added];
       }
       return prev.slice(0, rowCount);
@@ -135,11 +136,11 @@ export const PuzzleBuilder: React.FC<PuzzleBuilderProps> = ({
   const handleOperandCellClick = (rIdx: number, cIdx: number) => {
     setOperandActiveCounts((prev) => {
       const currentActive = prev[rIdx] ?? 0;
-      const targetActive = cIdx + 1;
+      const targetActive = gridCols - cIdx; // Karena rata kanan, dihitung dari ujung kanan
 
       let newActive: number;
       if (currentActive === targetActive) {
-        // If clicking the last active box, turn off 1 box (can go down to 0)
+        // Jika mengklik ujung aktif, kurangi 1
         newActive = Math.max(0, targetActive - 1);
       } else {
         // Set active count to targetActive
@@ -156,7 +157,7 @@ export const PuzzleBuilder: React.FC<PuzzleBuilderProps> = ({
   const handleResultCellClick = (cIdx: number) => {
     const bounds = getResultBounds(operandActiveCounts, config.operation);
     setResultActiveCount((currentActive) => {
-      const targetActive = cIdx + 1;
+      const targetActive = gridCols - cIdx; // Rata kanan
       let newActive: number;
       if (currentActive === targetActive) {
         newActive = targetActive - 1;
@@ -460,7 +461,7 @@ export const PuzzleBuilder: React.FC<PuzzleBuilderProps> = ({
                       <div className="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
                         <AnimatePresence>
                           {Array.from({ length: gridCols }).map((_, cIdx) => {
-                            const isActive = cIdx < activeCount;
+                            const isActive = cIdx >= gridCols - activeCount;
 
                             return (
                               <motion.button
@@ -522,7 +523,7 @@ export const PuzzleBuilder: React.FC<PuzzleBuilderProps> = ({
                 <div className="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
                   <AnimatePresence>
                     {Array.from({ length: gridCols }).map((_, cIdx) => {
-                      const isActive = cIdx < resultActiveCount;
+                      const isActive = cIdx >= gridCols - resultActiveCount;
 
                       return (
                         <motion.button
