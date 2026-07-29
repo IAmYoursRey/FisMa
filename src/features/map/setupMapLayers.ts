@@ -78,7 +78,7 @@ export const setupMapLayers = (
           data: geojson,
           cluster: !isHeatmapMode,
           clusterMaxZoom: 12,
-          clusterRadius: 60
+          clusterRadius: 50
         });
       }
 
@@ -141,7 +141,7 @@ export const setupMapLayers = (
           filter: ['has', 'point_count'],
           paint: {
             'circle-color': '#ef4444',
-            'circle-radius': ['step', ['get', 'point_count'], 22, 5, 30, 15, 38],
+            'circle-radius': ['step', ['get', 'point_count'], 20, 5, 26, 15, 34],
             'circle-opacity': 0.35,
             'circle-blur': 0.8
           }
@@ -156,7 +156,7 @@ export const setupMapLayers = (
           filter: ['has', 'point_count'],
           paint: {
             'circle-color': '#ef4444',
-            'circle-radius': ['step', ['get', 'point_count'], 16, 5, 22, 15, 28],
+            'circle-radius': ['step', ['get', 'point_count'], 14, 5, 18, 15, 24],
             'circle-stroke-width': 2.5,
             'circle-stroke-color': '#ffffff'
           }
@@ -171,7 +171,7 @@ export const setupMapLayers = (
           filter: ['has', 'point_count'],
           layout: {
             'text-field': '{point_count_abbreviated}',
-            'text-size': 13,
+            'text-size': 12,
             'text-allow-overlap': true,
             'text-ignore-placement': true
           },
@@ -199,7 +199,7 @@ export const setupMapLayers = (
               'RESOLVED',     '#10b981',
               '#ef4444'
             ],
-            'circle-radius': ['interpolate', ['linear'], ['zoom'], 0, 6, 8, 12, 16, 20],
+            'circle-radius': ['interpolate', ['linear'], ['zoom'], 0, 7, 8, 12, 16, 18],
             'circle-opacity': 0.35,
             'circle-blur': 0.6
           }
@@ -222,7 +222,7 @@ export const setupMapLayers = (
               'RESOLVED',     '#10b981',
               '#ef4444'
             ],
-            'circle-radius': ['interpolate', ['linear'], ['zoom'], 0, 5, 8, 9, 16, 13],
+            'circle-radius': ['interpolate', ['linear'], ['zoom'], 0, 5, 8, 8, 16, 12],
             'circle-stroke-width': 2,
             'circle-stroke-color': '#ffffff'
           }
@@ -235,11 +235,11 @@ export const setupMapLayers = (
           type: 'symbol',
           source: SOURCE_ID,
           filter: isHeatmapMode ? undefined : ['!', ['has', 'point_count']],
-          minzoom: 8,
+          minzoom: 3,
           layout: {
             'text-field': ['concat', ['get', 'icon'], ' ', ['get', 'title']],
             'text-size': 11,
-            'text-offset': [0, 1.4],
+            'text-offset': [0, 1.3],
             'text-anchor': 'top',
             'text-allow-overlap': false,
             'text-ignore-placement': false
