@@ -104,19 +104,23 @@ export interface MapStore {
 
 const REPORTS_STORAGE_KEY = 'gosiaga_reports_data';
 const ARCHIVED_STORAGE_KEY = 'gosiaga_archived_reports_data';
+const INITIALIZED_KEY = 'gosiaga_reports_initialized';
 
 const getInitialReports = (): Report[] => {
   try {
+    const isInitialized = localStorage.getItem(INITIALIZED_KEY);
     const stored = localStorage.getItem(REPORTS_STORAGE_KEY);
-    if (stored) {
+    if (isInitialized === 'true' && stored !== null) {
       const parsed = JSON.parse(stored);
-      if (Array.isArray(parsed) && parsed.length > 0) {
-        const storedIds = new Set(parsed.map((r: any) => r.id));
-        const missingSeeds = DEFAULT_SEED_REPORTS.filter((s) => !storedIds.has(s.id));
-        return [...parsed, ...missingSeeds];
-      }
+      if (Array.isArray(parsed)) return parsed;
     }
   } catch {}
+
+  try {
+    localStorage.setItem(REPORTS_STORAGE_KEY, JSON.stringify(DEFAULT_SEED_REPORTS));
+    localStorage.setItem(INITIALIZED_KEY, 'true');
+  } catch {}
+
   return DEFAULT_SEED_REPORTS;
 };
 
@@ -134,6 +138,7 @@ const getInitialArchivedReports = (): Report[] => {
 const saveReportsToStorage = (reports: Report[]) => {
   try {
     localStorage.setItem(REPORTS_STORAGE_KEY, JSON.stringify(reports));
+    localStorage.setItem(INITIALIZED_KEY, 'true');
   } catch {}
 };
 
@@ -222,7 +227,7 @@ export const useMapStore = create<MapStore>((set, get) => {
                 title: 'Laporan Diarsipkan / Dihapus dari Peta',
                 time: formatIndonesiaTimestamp(),
                 status: 'ARCHIVED',
-                description: 'Laporan telah diselesaikan/dihapus dan disimpan dalam arsip terpisah.'
+                description: 'Laporan telah diselesaikan/dihapus dan disimpan dalam arsip riwayat.'
               }
             ]
           };
