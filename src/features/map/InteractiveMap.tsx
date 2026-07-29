@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import * as maplibregl from 'maplibre-gl';
 import 'maplibre-gl/dist/maplibre-gl.css';
-import { useMapStore, MapLayerType } from '@/store/useMapStore';
+import { useMapStore, MapLayerType, Report } from '@/store/useMapStore';
 import { useAuthStore, isDevUser as checkIsDevUser, hasMapMarkPermission } from '@/store/useAuthStore';
 import { Layers, X, MapPin, Globe } from 'lucide-react';
 import { setupMapLayers } from './setupMapLayers';
@@ -88,9 +88,28 @@ const MAP_STYLES: Record<string, { style: any; label: string }> = {
   }
 };
 
+const CATEGORY_ICONS: Record<string, string> = {
+  BANJIR: '🌊',
+  LONGSOR: '⛰️',
+  GEMPA: '🌍',
+  KEBAKARAN: '🔥',
+  TSUNAMI: '🌊',
+  ANGIN_PUTING_BELIUNG: '🌪️',
+  LAINNYA: '⚠️',
+};
+
+const STATUS_COLORS: Record<string, string> = {
+  UNVERIFIED: '#ef4444',
+  NEEDS_REVIEW: '#f59e0b',
+  IN_PROGRESS: '#3b82f6',
+  RESOLVED: '#10b981',
+  ARCHIVED: '#64748b'
+};
+
 export const InteractiveMap: React.FC = () => {
   const mapRef = useRef<HTMLDivElement>(null);
   const mapInstance = useRef<maplibregl.Map | null>(null);
+  const domMarkersRef = useRef<maplibregl.Marker[]>([]);
 
   const { user } = useAuthStore();
   const canMarkMap = hasMapMarkPermission(user);
@@ -107,13 +126,13 @@ export const InteractiveMap: React.FC = () => {
   const [showLayerSelector, setShowLayerSelector] = useState(false);
   const [is3DMode, setIs3DMode] = useState(false);
 
-  const onReportClickRef = useRef((report: any) => {
+  const onReportClickRef = useRef((report: Report) => {
     if (typeof setSelectedReport === 'function') setSelectedReport(report);
     if (typeof setIsDrawerOpen === 'function') setIsDrawerOpen(true);
   });
 
   useEffect(() => {
-    onReportClickRef.current = (report: any) => {
+    onReportClickRef.current = (report: Report) => {
       if (typeof setSelectedReport === 'function') setSelectedReport(report);
       if (typeof setIsDrawerOpen === 'function') setIsDrawerOpen(true);
     };
@@ -127,8 +146,8 @@ export const InteractiveMap: React.FC = () => {
     const map = new (maplibregl as any).Map({
       container: mapRef.current,
       style: initialStyle,
-      center: [112.7521, -7.2575],
-      zoom: 10,
+      center: [118.0, -2.5],
+      zoom: 4.8,
       pitch: 0,
       projection: { type: 'mercator' },
       antialias: true,
@@ -178,19 +197,59 @@ export const InteractiveMap: React.FC = () => {
     if (!mapInstance.current) return;
     const targetStyle = MAP_STYLES[activeLayer]?.style || MAP_STYLES.dark.style;
 
-    const renderLayers = () => {
-      if (mapInstance.current) {
-        setupMapLayers(mapInstance.current, reports, (r) => onReportClickRef.current(r), false);
-      }
+    const renderAllMarkers = () => {
+      if (!mapInstance.current) return;
+
+      setupMapLayers(mapInstance.current, reports, (r) => onReportClickRef.current(r), false);
+
+      domMarkersRef.current.forEach((m) => m.remove());
+      domMarkersRef.current = [];
+
+      (reports || []).forEach((report) => {
+        const lng = Number(report.longitude);
+        const lat = Number(report.latitude);
+        if (isNaN(lng) || isNaN(lat)) return;
+
+        const catKey = (report.category || 'LAINNYA').toUpperCase();
+        const icon = CATEGORY_ICONS[catKey] || '⚠️';
+        const color = STATUS_COLORS[report.status] || '#ef4444';
+
+        const el = document.createElement('div');
+        el.className = 'gosiaga-dom-marker group cursor-pointer relative flex flex-col items-center select-none';
+        el.style.zIndex = '100';
+
+        el.innerHTML = `
+          <div class="relative flex items-center justify-center p-2 rounded-2xl bg-slate-900/90 border-2 text-white shadow-2xl backdrop-blur-md transition-all group-hover:scale-125 group-hover:-translate-y-1" style="border-color: ${color}">
+            <span class="text-base leading-none">${icon}</span>
+            <span class="absolute -top-1 -right-1 w-3 h-3 rounded-full animate-ping opacity-75" style="background-color: ${color}"></span>
+            <span class="absolute -top-1 -right-1 w-3 h-3 rounded-full" style="background-color: ${color}"></span>
+          </div>
+          <div class="mt-1 px-2 py-0.5 bg-slate-900/90 text-[10px] font-extrabold text-white rounded-lg border border-slate-700 shadow-md whitespace-nowrap max-w-[120px] truncate group-hover:max-w-none group-hover:whitespace-normal">
+            ${report.title || 'Bencana'}
+          </div>
+        `;
+
+        el.addEventListener('click', (e) => {
+          e.stopPropagation();
+          mapInstance.current?.flyTo({ center: [lng, lat], zoom: 15, duration: 800 });
+          onReportClickRef.current(report);
+        });
+
+        const marker = new maplibregl.Marker({ element: el, anchor: 'bottom' })
+          .setLngLat([lng, lat])
+          .addTo(mapInstance.current);
+
+        domMarkersRef.current.push(marker);
+      });
     };
 
     mapInstance.current.setStyle(targetStyle);
 
-    renderLayers();
+    renderAllMarkers();
 
-    mapInstance.current.once('style.load', renderLayers);
-    mapInstance.current.once('styledata', renderLayers);
-    mapInstance.current.once('idle', renderLayers);
+    mapInstance.current.once('style.load', renderAllMarkers);
+    mapInstance.current.once('styledata', renderAllMarkers);
+    mapInstance.current.once('idle', renderAllMarkers);
   }, [activeLayer, reports]);
 
   const toggle3DMode = () => {
