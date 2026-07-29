@@ -168,6 +168,21 @@ export const InteractiveMap: React.FC = () => {
       }
     });
 
+    const updateDomMarkerVisibility = () => {
+      if (!mapInstance.current) return;
+      const zoom = mapInstance.current.getZoom();
+      const showDom = zoom >= 7.5;
+      domMarkersRef.current.forEach((marker) => {
+        const el = marker.getElement();
+        if (el) {
+          el.style.display = showDom ? 'flex' : 'none';
+        }
+      });
+    };
+
+    map.on('zoom', updateDomMarkerVisibility);
+    map.on('zoomend', updateDomMarkerVisibility);
+
     const resizeObserver = new ResizeObserver(() => {
       if (mapInstance.current) {
         mapInstance.current.resize();
@@ -205,6 +220,9 @@ export const InteractiveMap: React.FC = () => {
       domMarkersRef.current.forEach((m) => m.remove());
       domMarkersRef.current = [];
 
+      const currentZoom = mapInstance.current.getZoom();
+      const showDomInitial = currentZoom >= 7.5;
+
       (reports || []).forEach((report) => {
         const lng = Number(report.longitude);
         const lat = Number(report.latitude);
@@ -217,6 +235,7 @@ export const InteractiveMap: React.FC = () => {
         const el = document.createElement('div');
         el.className = 'gosiaga-dom-marker group cursor-pointer relative flex flex-col items-center select-none';
         el.style.zIndex = '100';
+        el.style.display = showDomInitial ? 'flex' : 'none';
 
         el.innerHTML = `
           <div class="relative flex items-center justify-center p-2 rounded-2xl bg-slate-900/90 border-2 text-white shadow-2xl backdrop-blur-md transition-all group-hover:scale-125 group-hover:-translate-y-1" style="border-color: ${color}">

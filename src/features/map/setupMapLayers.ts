@@ -78,7 +78,7 @@ export const setupMapLayers = (
           data: geojson,
           cluster: !isHeatmapMode,
           clusterMaxZoom: 12,
-          clusterRadius: 50
+          clusterRadius: 60
         });
       }
 
@@ -141,7 +141,7 @@ export const setupMapLayers = (
           filter: ['has', 'point_count'],
           paint: {
             'circle-color': '#ef4444',
-            'circle-radius': ['step', ['get', 'point_count'], 20, 5, 28, 15, 36],
+            'circle-radius': ['step', ['get', 'point_count'], 22, 5, 30, 15, 38],
             'circle-opacity': 0.35,
             'circle-blur': 0.8
           }
@@ -156,7 +156,7 @@ export const setupMapLayers = (
           filter: ['has', 'point_count'],
           paint: {
             'circle-color': '#ef4444',
-            'circle-radius': ['step', ['get', 'point_count'], 14, 5, 20, 15, 26],
+            'circle-radius': ['step', ['get', 'point_count'], 16, 5, 22, 15, 28],
             'circle-stroke-width': 2.5,
             'circle-stroke-color': '#ffffff'
           }
@@ -171,13 +171,14 @@ export const setupMapLayers = (
           filter: ['has', 'point_count'],
           layout: {
             'text-field': '{point_count_abbreviated}',
-            'text-size': 12,
-            'text-allow-overlap': true
+            'text-size': 13,
+            'text-allow-overlap': true,
+            'text-ignore-placement': true
           },
           paint: {
             'text-color': '#ffffff',
-            'text-halo-color': 'rgba(0,0,0,0.5)',
-            'text-halo-width': 1
+            'text-halo-color': 'rgba(0,0,0,0.6)',
+            'text-halo-width': 1.5
           }
         });
       }
@@ -198,7 +199,7 @@ export const setupMapLayers = (
               'RESOLVED',     '#10b981',
               '#ef4444'
             ],
-            'circle-radius': ['interpolate', ['linear'], ['zoom'], 0, 8, 8, 14, 16, 22],
+            'circle-radius': ['interpolate', ['linear'], ['zoom'], 0, 6, 8, 12, 16, 20],
             'circle-opacity': 0.35,
             'circle-blur': 0.6
           }
@@ -221,8 +222,8 @@ export const setupMapLayers = (
               'RESOLVED',     '#10b981',
               '#ef4444'
             ],
-            'circle-radius': ['interpolate', ['linear'], ['zoom'], 0, 6, 8, 10, 16, 14],
-            'circle-stroke-width': 2.5,
+            'circle-radius': ['interpolate', ['linear'], ['zoom'], 0, 5, 8, 9, 16, 13],
+            'circle-stroke-width': 2,
             'circle-stroke-color': '#ffffff'
           }
         });
@@ -234,14 +235,14 @@ export const setupMapLayers = (
           type: 'symbol',
           source: SOURCE_ID,
           filter: isHeatmapMode ? undefined : ['!', ['has', 'point_count']],
-          minzoom: 3,
+          minzoom: 8,
           layout: {
             'text-field': ['concat', ['get', 'icon'], ' ', ['get', 'title']],
             'text-size': 11,
             'text-offset': [0, 1.4],
             'text-anchor': 'top',
-            'text-allow-overlap': true,
-            'text-ignore-placement': true
+            'text-allow-overlap': false,
+            'text-ignore-placement': false
           },
           paint: {
             'text-color': '#ffffff',
